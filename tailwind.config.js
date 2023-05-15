@@ -6,11 +6,16 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    colors: {
+      'main-dark': '#292933',
+      'main-dark-b': '#1E1E26',
+      'main-light': '#46465B',
+      'secondary-light': '#8FC6B7',
+      'white': '#FFF'
+    },
     extend: {
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'main-background': "url('./assets/images/bckgrnd-main.jpg')",
       },
     },
   },
