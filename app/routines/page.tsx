@@ -1,10 +1,10 @@
 import Navbar from '../components/navbar';
 
-export default function WeeklyPlan() {
+export default function Routines() {
   return (
     <>
       <Navbar />
-      <h1>Weekly Plan</h1>
+      <h1 className='text-white'>Routines</h1>
     </>
   );
-  }
+}
