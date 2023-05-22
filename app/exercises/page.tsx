@@ -6,6 +6,10 @@ import { useEffect, useState } from 'react';
 
 export default function ExerciseCategory()  {
   const [bodyPartsList, setBodyPartsList] = useState([]);
+  const headersInfo: {} = {
+    'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
+    'X-RapidAPI-Host': process.env.NEXT_PUBLIC_RAPID_HOST,
+  };
   useEffect(() => {
     async function getBodyParts() {
       try {
@@ -13,11 +17,7 @@ export default function ExerciseCategory()  {
           'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
           {
             method: 'GET',
-            headers: {
-              'X-RapidAPI-Key':
-                'f18ae56f38msh00422b6d1f0b2bcp12e26cjsned30470b9d0d',
-              'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
-            },
+            headers: headersInfo,
           }
         );
         const data = await res.json();
@@ -32,7 +32,8 @@ export default function ExerciseCategory()  {
   return (
     <>
       <Navbar />
-      <div className='w-full m-auto text-center mt-16'>
+        <div className='text-center mt-32 fixed mx-auto w-full'>
+        {/* <div className='text-center mt-0 mx-auto w-full overflow-auto pt-24'> */}
         <Dropdown dropdownTitle={'Muscle Group'} dropdownItems={bodyPartsList} />
       </div>
     </>

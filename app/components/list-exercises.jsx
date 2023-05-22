@@ -1,28 +1,36 @@
 import { useState } from 'react';
 
 export default function ListExercises({ bodyPartExercise }) {
+  const [selectedId, setSelectedId] = useState(null);
   const [isActiveAll, setActiveAll] = useState(false);
-
-  // const handleToggleAll = () => {
-  //   setActiveAll(!isActiveAll);
-  // };
+  
+  const handleToggleAll = () => {
+      setActiveAll(!isActiveAll);
+      setSelectedId(null);
+    };
 
   return (
     <>
-      <div className='text-secondary-light font-bold text-right w-[800px] mx-auto mt-2 hover:text-secondary-light-b'>
-        {/* <button onClick={handleToggleAll}>
+      <div className='text-secondary-light font-bold text-right w-[675px] mx-auto mt-2 hover:text-secondary-light-b'>
+        <button onClick={handleToggleAll}>
           {isActiveAll ? '- Collapse All' : '+ Expand All'}
-        </button> */}
+        </button>
       </div>
-      <div className='max-h-[512px] w-[800px] mx-auto mt-6 overflow-auto bg-secondary-a'>
-        {bodyPartExercise.map(({ equipment, name, target, gifUrl, index }) => (
-          <div key={index}>
-            <div className='flex justify-center border bg-main-dark-b hover:bg-main-light hover:cursor-pointer py-3'>
-              <p className='text-white text-left capitalize font-bold'>
+      <div className='max-h-[512px] w-[675px] mx-auto mt-6 overflow-auto bg-secondary-a'>
+        {bodyPartExercise.map(({ equipment, name, target, gifUrl, id }) => (
+          <div key={id} >
+            <div className={selectedId === id ? 'flex justify-center border bg-main-light hover:cursor-pointer py-3' : 'flex justify-center border bg-main-dark-b hover:bg-main-light hover:cursor-pointer py-3'} onClick={() => {
+              if (id !== selectedId) {
+                setSelectedId(id);
+              } else {
+                setSelectedId(null);
+              }
+            }}>
+              <p className='text-white text-left capitalize font-bold'> 
                 {name}
               </p>
             </div>
-            <div className={isActiveAll ? 'flex-initial' : 'hidden'}>
+            <div className={selectedId === id || isActiveAll ? 'flex-initial' : 'hidden'}>
               <div className='flex justify-evenly px-6 py-6'>
                 <div className='flex'>
                   <p className='text-white text-left capitalize font-bold'>
