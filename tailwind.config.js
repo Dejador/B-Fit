@@ -10,15 +10,15 @@ module.exports = {
       'main-dark': '#292933',
       'main-dark-b': '#1E1E26',
       'main-light': '#46465B',
+      'main-light-b': '#8d8da0',
       'secondary-a': '#303049',
       'secondary-light': '#8FC6B7',
       'secondary-light-b': '#B0EDD9',
-      'white': '#FFF'
+      white: '#FFF',
     },
     extend: {
-      backgroundImage: {
-      },
+      backgroundImage: {},
     },
   },
-  plugins: [],
-}
+  plugins: [require('tailwind-scrollbar')],
+};

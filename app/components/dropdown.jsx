@@ -19,8 +19,6 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
     'X-RapidAPI-Host': process.env.NEXT_PUBLIC_RAPID_HOST,
   };
 
-  console.log(headersInfo)
-
   useEffect(() => {
     let completeUrlAPI =
       'https://exercisedb.p.rapidapi.com/exercises/bodyPart/' +
@@ -44,9 +42,9 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
     <>
       <Menu as='div' className='relative inline-block text-left'>
         <div>
-          <Menu.Button className='inline-flex w-72 border justify-center bg-main-light px-3 py-2 text-2xl text-white hover:bg-main-dark-b mt-5 transition-colors'>
+          <Menu.Button className='inline-flex w-52 md:w-72 border justify-center bg-main-light px-3 py-2 text-lg md:text-2xl text-white hover:bg-main-dark-b mt-0 md:mt-5 transition-colors'>
             {dropdownTitle}{' '}
-            <p className='text-white w-full absolute -mr-56'>&#x25BD;</p>
+            <p className='text-white w-full absolute -mr-40 md:-mr-56'>&#x25BD;</p>
           </Menu.Button>
         </div>
 
@@ -59,7 +57,7 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
           leaveFrom='transform opacity-100 scale-100'
           leaveTo='transform opacity-0 scale-95'
         >
-          <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-52 ml-10 origin-top-right bg-white'>
+          <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-40 md:w-52 ml-6 md:ml-10 text-sm md:text-base origin-top-right bg-white'>
             <div>
               {dropdownItems.map((bodyPart, index) => (
                 <Menu.Item key={index}>
@@ -85,7 +83,7 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
           </Menu.Items>
         </Transition>
       </Menu>
-      <div className='uppercase text-white font-bold text-lg mt-8'>
+      <div className='uppercase text-white font-bold  text-sm md:text-lg mt-8'>
         {selectedName}
       </div>
       <ListExercises bodyPartExercise={bodyPartExercise} />
