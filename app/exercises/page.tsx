@@ -1,6 +1,5 @@
 'use client';
 
-import Navbar from '../components/navbar';
 import Dropdown from '../components/dropdown';
 import { useEffect, useState } from 'react';
 
@@ -31,7 +30,6 @@ export default function ExerciseCategory()  {
 
   return (
     <>
-      <Navbar />
         <div className='text-center mt-12 md:mt-32 fixed mx-auto w-full'>
         {/* <div className='text-center mt-0 mx-auto w-full overflow-auto pt-24'> */}
         <Dropdown dropdownTitle={'Muscle Group'} dropdownItems={bodyPartsList} />

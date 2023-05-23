@@ -1,14 +1,14 @@
 export default function ActionButton({
-  action,
+  onClick,
   buttonTitle,
   className,
 }: {
-  action?: () => void;
+  onClick?: () => void;
   buttonTitle: string;
   className?: string;
 }) {
   return (
-    <button className={className} onClick={action}>
+    <button className={className} onClick={onClick}>
       {buttonTitle}
     </button>
   );

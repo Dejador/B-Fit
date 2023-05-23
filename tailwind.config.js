@@ -14,6 +14,8 @@ module.exports = {
       'secondary-a': '#303049',
       'secondary-light': '#8FC6B7',
       'secondary-light-b': '#B0EDD9',
+      'alert': '#FF5F5F',
+      'alert-b': '#FF3333',
       white: '#FFF',
     },
     extend: {
