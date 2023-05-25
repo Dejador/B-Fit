@@ -1,8 +1,16 @@
+'use client';
+
 import LinkButton from './link-button';
+import ActionButton from './action-button';
 
 const editButtonStyle = 'w-[112px] text-secondary-light hover:text-secondary-light-b hover:cursor-pointer hover:transition-colors'
+const deleteButtonStyle = 'text-alert hover:text-alert-b hover:cursor-pointer hover:transition-colors'
 
-export default function Routine() {
+function handleDelete () {
+  alert("Sorry, can't do that yet!")
+}
+
+export default function RoutineCard() {
   return (
     <>
       <div className='mt-8 justify-center text-center align-middle flex'>
@@ -62,6 +70,13 @@ export default function Routine() {
             <div className='w-14 border-white border py-1 px-2'>#</div>
           </div>
           </div>
+        <div className='flex mt-2 justify-center'>
+        <ActionButton
+          className={deleteButtonStyle}
+          action={() => handleDelete()}
+          buttonTitle={'X Delete'}
+        />
+        </div>
         </div>
       </div>
     </>

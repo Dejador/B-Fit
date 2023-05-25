@@ -1,4 +1,4 @@
-import Routine from '../components/routine';
+import RoutineCard from '../components/routine-card';
 import LinkButton from '../components/link-button';
 
 const createNewButtonStyle =
@@ -15,14 +15,14 @@ export default function Routines() {
         />
       </div>
       <div className='flex justify-center gap-8 flex-wrap max-h-[550px] overflow-auto mt-4 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b'>
-      <Routine />
-      <Routine />
-      <Routine />
-      <Routine />
-      <Routine />
-      <Routine />
-      <Routine />
-      <Routine />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
       </div>
     </>
   );

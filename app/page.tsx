@@ -5,8 +5,7 @@ export default function Home() {
     'border text-2xl bg-main-light hover:bg-main-dark-b text-white px-16 py-12 opacity-90 transition-colors';
   return (
     <>
-      <div className='bg-[url("/assets/images/background-main.jpg")] bg-cover'>
-        <div className='flex min-h-[100vh] items-center flex-col md:flex-row justify-evenly -mt-12 md:mt-0'>
+        <div className='bg-[url("/assets/images/background-main.jpg")] bg-cover flex min-h-[100vh] items-center flex-col md:flex-row justify-evenly -mt-12 md:mt-0'>
           <div>
             <LinkButton
               className={buttonStyle}
@@ -29,7 +28,6 @@ export default function Home() {
             />
           </div>
         </div>
-      </div>
     </>
   );
 }

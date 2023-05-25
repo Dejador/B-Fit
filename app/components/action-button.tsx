@@ -1,14 +1,16 @@
 export default function ActionButton({
-  onClick,
+  action = () => { },
   buttonTitle,
   className,
+  type = 'button'
 }: {
-  onClick?: () => void;
+  action?: () => void;
   buttonTitle: string;
   className?: string;
+  type?: 'button' | 'submit'
 }) {
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={() => action()} type={type}>
       {buttonTitle}
     </button>
   );
