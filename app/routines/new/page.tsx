@@ -9,10 +9,6 @@ const cancelButtonStyle = 'font-bold text-alert hover:text-alert-b hover:cursor-
 const createButtonStyle = 'font-bold text-main-dark bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-3 py-2'
 const addButtonStyle = 'font-bold text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors'
 
-function handleAddExercise () {
-  alert("Sorry, can't do that yet!")
-}
-
 function handleSaveRoutine () {
   alert("Sorry, can't do that yet!")
 }
@@ -26,12 +22,13 @@ export default function New() {
     <AddExercisesModal open={openModal} onClose={() => setOpenModal(false)} />
     <div className="flex-col text-center mt-44">
     <input className="mb-6 px-2 py-2 text-main-light font-bold text-center" type="text" placeholder="Enter Routine Name" required/>
-    <div className='text-white'></div>
+    <div>
     <ActionButton
           className={addButtonStyle}
           action={() => setOpenModal(true)}
           buttonTitle={'+ Add Exercise(s)'}
         />
+        </div>
     <div className="mt-6">
       <div className="flex justify-center">
     </div>

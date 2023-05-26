@@ -19,7 +19,7 @@ export default function ListExercises({ bodyPartExercise }) {
       <div className='max-h-[512px] w-[350px] md:w-[675px] mx-auto mt-6 overflow-auto bg-secondary-a scrollbar-track-white border-x scrollbar-thin scrollbar-thumb-main-light-b'>
         {bodyPartExercise.map(({ equipment, name, target, gifUrl, id }) => (
           <div key={id} >
-            <div className={selectedId === id ? 'flex justify-center border-y bg-main-light hover:cursor-pointer py-3' : 'flex justify-center border-y bg-main-dark-b hover:bg-main-light hover:cursor-pointer py-3'} onClick={() => {
+            <div className={selectedId === id ? 'flex justify-center border-y bg-main-light-b hover:cursor-pointer py-3' : 'flex justify-center border-y bg-main-dark-b hover:bg-main-light-b hover:cursor-pointer py-3'} onClick={() => {
               if (id !== selectedId) {
                 setSelectedId(id);
               } else {

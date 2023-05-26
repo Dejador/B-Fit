@@ -23,6 +23,12 @@ export default function Routines() {
       <RoutineCard />
       <RoutineCard />
       <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
+      <RoutineCard />
       </div>
     </>
   );
