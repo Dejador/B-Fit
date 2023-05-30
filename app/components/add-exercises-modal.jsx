@@ -4,32 +4,19 @@ import allExercises from '../../public/assets/files/allExercises.json';
 import bodyPartList from '../../public/assets/files/bodyPartList.json';
 
 const createButtonStyle =
-  'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors px-2 py-1 w-[85px] text-sm';
+  'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors px-2 py-1 w-[55px] text-sm';
+const addButtonStyle =
+  'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors px-2 py-1 w-[30px] text-sm';
 const removeButtonStyle =
-  'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors px-2 py-1 w-[85px] text-sm';
+  'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors px-2 py-1 w-[30px] text-sm';
 
-export default function AddExercisesModal({ open, onClose }) {
+  export default function AddExercisesModal({ open, onClose, selectedExerciseIds, onAddExercise, onRemoveExercise }) {
   const [selectedId, setSelectedId] = useState(null);
-  const [selectedExerciseIds, setSelectedExerciseIds] = useState([]);
-
-  function onAddExercise(id) {
-    setSelectedExerciseIds([...selectedExerciseIds, id]);
-  }
-  function onRemoveExercise(id) {
-    const newExcerciseIds = [...selectedExerciseIds].filter(
-      (setId) => setId !== id
-    );
-    setSelectedExerciseIds(newExcerciseIds);
-  }
-
-  useEffect(() => {
-    console.log(selectedExerciseIds);
-  }, [selectedExerciseIds]);
 
   if (!open) return null;
   return (
     <div
-      className='fixed w-full h-full bg-opacity-80 bg-main-dark-b'
+      className='fixed w-full h-full bg-opacity-80 bg-main-dark-b z-10'
       onClick={() => onClose()}
     >
       <div
@@ -68,8 +55,8 @@ export default function AddExercisesModal({ open, onClose }) {
                         selectedId === index ? 'flex-initial' : 'hidden'
                       }
                     >
-                      <div className='relative flex items-center border-y bg-main-light py-3 h-14'>
-                        <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-2'>
+                      <div className='relative flex items-center border-y bg-main-light py-3 h-14 hover:bg-opacity-50'>
+                        <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
                           {name}
                         </p>
                         <div
@@ -80,9 +67,9 @@ export default function AddExercisesModal({ open, onClose }) {
                           }
                         >
                           <ActionButton
-                            className={createButtonStyle}
+                            className={addButtonStyle}
                             action={() => onAddExercise(id)}
-                            buttonTitle={'+ Add'}
+                            buttonTitle={'+'}
                           />
                         </div>
                         <div
@@ -95,7 +82,7 @@ export default function AddExercisesModal({ open, onClose }) {
                           <ActionButton
                             className={removeButtonStyle}
                             action={() => onRemoveExercise(id)}
-                            buttonTitle={'- Remove'}
+                            buttonTitle={'-'}
                           />
                         </div>
                       </div>
