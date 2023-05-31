@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ActionButton from './action-button';
 import allExercises from '../../public/assets/files/allExercises.json';
 import bodyPartList from '../../public/assets/files/bodyPartList.json';
@@ -10,8 +10,19 @@ const addButtonStyle =
 const removeButtonStyle =
   'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors px-2 py-1 w-[30px] text-sm';
 
-  export default function AddExercisesModal({ open, onClose, selectedExerciseIds, onAddExercise, onRemoveExercise }) {
+export default function AddExercisesModal({
+  open,
+  onClose,
+  selectedExerciseIds,
+  onAddExercise,
+  onRemoveExercise,
+}) {
   const [selectedId, setSelectedId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    console.log(searchTerm);
+  }, [searchTerm]);
 
   if (!open) return null;
   return (
@@ -46,49 +57,68 @@ const removeButtonStyle =
                   {bodyPart}
                 </p>
               </div>
-              {allExercises
-                .filter((exercise) => exercise.bodyPart === bodyPart)
-                .map(({ equipment, name, target, gifUrl, id, bodyPart }) => (
-                  <div key={id}>
-                    <div
-                      className={
-                        selectedId === index ? 'flex-initial' : 'hidden'
-                      }
-                    >
-                      <div className='relative flex items-center border-y bg-main-light py-3 h-14 hover:bg-opacity-50'>
-                        <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
-                          {name}
-                        </p>
-                        <div
-                          className={
-                            selectedExerciseIds.includes(id)
-                              ? 'hidden'
-                              : 'text-end mr-2 absolute right-0'
-                          }
-                        >
-                          <ActionButton
-                            className={addButtonStyle}
-                            action={() => onAddExercise(id)}
-                            buttonTitle={'+'}
-                          />
-                        </div>
-                        <div
-                          className={
-                            !selectedExerciseIds.includes(id)
-                              ? 'hidden'
-                              : 'text-end mr-2 absolute right-0'
-                          }
-                        >
-                          <ActionButton
-                            className={removeButtonStyle}
-                            action={() => onRemoveExercise(id)}
-                            buttonTitle={'-'}
-                          />
+              <div>
+                <input
+                  className={
+                    selectedId === index
+                      ? 'w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light text-center'
+                      : 'hidden'
+                  }
+                  type='text'
+                  placeholder='Search'
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <div className='max-h-[450px] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+                {allExercises
+                  .filter((exercise) =>
+                    exercise.name
+                      .toLowerCase()
+                      .includes(searchTerm.toLowerCase())
+                  )
+                  .filter((exercise) => exercise.bodyPart === bodyPart)
+                  .map(({ equipment, name, target, gifUrl, id, bodyPart }) => (
+                    <div key={id}>
+                      <div
+                        className={
+                          selectedId === index ? 'flex-initial' : 'hidden'
+                        }
+                      >
+                        <div className='relative flex items-center border-y bg-main-light py-3 h-14 hover:bg-opacity-50'>
+                          <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
+                            {name}
+                          </p>
+                          <div
+                            className={
+                              selectedExerciseIds.includes(id)
+                                ? 'hidden'
+                                : 'text-end mr-2 absolute right-0'
+                            }
+                          >
+                            <ActionButton
+                              className={addButtonStyle}
+                              action={() => onAddExercise(id)}
+                              buttonTitle={'+'}
+                            />
+                          </div>
+                          <div
+                            className={
+                              !selectedExerciseIds.includes(id)
+                                ? 'hidden'
+                                : 'text-end mr-2 absolute right-0'
+                            }
+                          >
+                            <ActionButton
+                              className={removeButtonStyle}
+                              action={() => onRemoveExercise(id)}
+                              buttonTitle={'-'}
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
             </div>
           ))}
         </div>

@@ -3,6 +3,7 @@
 import LinkButton from '@/app/components/link-button';
 import ActionButton from '@/app/components/action-button';
 import AddExercisesModal from '@/app/components/add-exercises-modal';
+import WarningModal from '@/app/components/warning-modal';
 import allExercises from '../../../public/assets/files/allExercises.json';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,9 +12,9 @@ import { useRouter } from 'next/navigation';
 const cancelButtonStyle =
   'font-bold text-alert hover:text-alert-b hover:cursor-pointer transition-colors';
 const createButtonStyle =
-  'font-bold text-main-dark bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-3 py-2';
+  'font-bold text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-3 py-2';
 const disabledStyle =
-  'text-white bg-grey border border-white px-3 py-2';
+  'text-white bg-grey px-3 py-2 hover:cursor-default';
 const addButtonStyle =
   'font-bold text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors';
 
@@ -23,6 +24,7 @@ const removeButtonStyle =
 export default function New() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
+  const [openWarningModal, setOpenWarningModal] = useState(false);
   const [selectedExerciseIds, setSelectedExerciseIds] = useState([]);
   const [newRoutine, setNewRoutine] = useState({});
   const [isDisabled, setIsDisabled] = useState(true);
@@ -52,7 +54,7 @@ export default function New() {
 
   function handleOnSaveRoutine() {
     const routineExercises = selectedExerciseIds;
-    setNewRoutine({ routineId: uuidv4(), routineName, routineExercises });
+    setNewRoutine({ categoty: 'Routine', routineId: uuidv4(), routineName, routineExercises });
     router.replace('/routines');
   }
 
@@ -65,6 +67,12 @@ export default function New() {
         setSelectedExerciseIds={setSelectedExerciseIds}
         onAddExercise={onAddExercise}
         onRemoveExercise={onRemoveExercise}
+      />
+      <WarningModal
+        open={openWarningModal}
+        onCancel={() => setOpenWarningModal(false)}
+        cancelText='Ok'
+        warningMessage='Please enter a Routine Name and Add Exercises to continue'
       />
       <div className='flex-col text-center mt-44'>
         <input
@@ -91,7 +99,7 @@ export default function New() {
                     <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
                       {name}
                     </p>
-                    <div className={'text-end mr-2 absolute right-0'}>
+                    <div className='text-end mr-2 absolute right-0'>
                       <ActionButton
                         className={removeButtonStyle}
                         action={() => onRemoveExercise(id)}
@@ -106,9 +114,8 @@ export default function New() {
         <div className='mt-3'>
           <div className='flex justify-center'></div>
           <ActionButton
-            disabled={isDisabled}
             className={isDisabled ? disabledStyle : createButtonStyle}
-            action={() => handleOnSaveRoutine()}
+            action={isDisabled ? () => setOpenWarningModal(true) : () => handleOnSaveRoutine()}
             buttonTitle={'Finish and Save Routine'}
           />
         </div>
