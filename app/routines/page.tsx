@@ -1,15 +1,13 @@
 import RoutineCard from '../components/routine-card';
 import LinkButton from '../components/link-button';
-
-const createNewButtonStyle =
-  'border border-white text-sm bg-secondary-light hover:bg-secondary-light-b text-main-dark font-bold px-6 py-2 transition-colors';
+import { buttonStyles } from '../styles/button-styles';
 
 export default function Routines() {
   return (
     <>
       <div className='mt-32 justify-center text-center align-middle flex'>
         <LinkButton
-          className={createNewButtonStyle}
+          className={buttonStyles.create}
           route={'/routines/new'}
           buttonTitle={'+ Create New Routine'}
         />

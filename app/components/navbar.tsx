@@ -2,12 +2,7 @@
 
 import { useState } from 'react';
 import LinkButton from './link-button';
-
-const navbarButtonStyle =
-  'border text-sm bg-main-light hover:bg-main-dark-b text-white px-6 h-[70%] my-auto leading-8 transition-colors';
-
-const mobileMenuButtonStyle =
-  'text-sm hover:bg-main-dark-b w-[98%] ml-[1%] absolute left-0 py-2 text-white transition-colors';
+import { buttonStyles } from '../styles/button-styles';
 
 export default function Navbar() {
   const [isActive, setActive] = useState(false);
@@ -32,17 +27,17 @@ export default function Navbar() {
         </div>
         <div className='md:ml-auto align-middle flex md:space-x-4'>
           <LinkButton
-            className={navbarButtonStyle}
+            className={buttonStyles.navbarButtonStyle}
             route={'/exercises'}
             buttonTitle={'Exercises'}
           />
           <LinkButton
-            className={navbarButtonStyle}
+            className={buttonStyles.navbarButtonStyle}
             route={'/routines'}
             buttonTitle={'Routines'}
           />
           <LinkButton
-            className={navbarButtonStyle}
+            className={buttonStyles.navbarButtonStyle}
             route={'/weekly'}
             buttonTitle={'Weekly Plan'}
           />
@@ -74,28 +69,28 @@ export default function Navbar() {
           >
             <div className='mb-10' onClick={hideMenu}>
               <LinkButton
-                className={mobileMenuButtonStyle}
+                className={buttonStyles.mobileMenuButtonStyle}
                 route={'/'}
                 buttonTitle={'Home'}
               />
             </div>
             <div className='mb-20' onClick={hideMenu}>
               <LinkButton
-                className={mobileMenuButtonStyle}
+                className={buttonStyles.mobileMenuButtonStyle}
                 route={'/exercises'}
                 buttonTitle={'Exercises'}
               />
             </div>
             <div className='mb-[120px]' onClick={hideMenu}>
               <LinkButton
-                className={mobileMenuButtonStyle}
+                className={buttonStyles.mobileMenuButtonStyle}
                 route={'/routines'}
                 buttonTitle={'Routines'}
               />
             </div>
             <div onClick={hideMenu}>
               <LinkButton
-                className={mobileMenuButtonStyle}
+                className={buttonStyles.mobileMenuButtonStyle}
                 route={'/weekly'}
                 buttonTitle={'Weekly Plan'}
               />

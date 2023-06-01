@@ -1,10 +1,5 @@
-import { useState } from 'react';
 import ActionButton from './action-button';
-
-const confirmButtonStyle =
-  'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors px-2 py-1 w-[55px] text-sm';
-const cancelButtonStyle =
-  'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors px-2 py-1 w-[55px] text-sm';
+import { buttonStyles } from '../styles/button-styles';
 
 export default function WarningModal({
   open,
@@ -39,7 +34,7 @@ export default function WarningModal({
         <div className='flex justify-center gap-4 pb-4'>
         <div className=''>
           <ActionButton
-            className={confirmText? cancelButtonStyle : confirmButtonStyle}
+            className={confirmText? buttonStyles.cancel : buttonStyles.confirm}
             action={() => onCancel()}
             buttonTitle={cancelText}
           />
@@ -48,7 +43,7 @@ export default function WarningModal({
         {confirmText ? (
           <div className=''>
             <ActionButton
-              className={confirmButtonStyle}
+              className={buttonStyles.confirm}
               action={() => onConfirm()}
               buttonTitle={confirmText}
             />

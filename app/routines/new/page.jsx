@@ -8,17 +8,7 @@ import allExercises from '../../../public/assets/files/allExercises.json';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
-
-const cancelButtonStyle =
-  'font-bold text-alert hover:text-alert-b hover:cursor-pointer transition-colors';
-const createButtonStyle =
-  'font-bold text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-3 py-2';
-const disabledStyle = 'text-white bg-grey px-3 py-2 hover:cursor-default';
-const addButtonStyle =
-  'font-bold text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors';
-
-const removeButtonStyle =
-  'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors px-2 py-1 w-[30px] text-sm';
+import { buttonStyles } from '@/app/styles/button-styles';
 
 export default function New() {
   const router = useRouter();
@@ -38,7 +28,7 @@ export default function New() {
     } else if (selectedExerciseIds.length && routineName === '') {
       setWarningMessage('Please enter a Routine Name to continue');
     } else if (selectedExerciseIds.length === 0 && routineName !== '') {
-      setWarningMessage('Please Add Exercises to continue to continue');
+      setWarningMessage('Please Add Exercises to continue');
     }
   }, [routineName, selectedExerciseIds]);
 
@@ -75,6 +65,8 @@ export default function New() {
     router.replace('/routines');
   }
 
+  console.log(newRoutine)
+
   return (
     <>
       <AddExercisesModal
@@ -101,7 +93,7 @@ export default function New() {
         />
         <div className='mb-3'>
           <ActionButton
-            className={addButtonStyle}
+            className={buttonStyles.add}
             action={() => setOpenModal(true)}
             buttonTitle={'+ Add Exercise(s)'}
           />
@@ -112,13 +104,13 @@ export default function New() {
               .filter((exercise) => exercise.id === index)
               .map(({ equipment, name, target, gifUrl, id, bodyPart }) => (
                 <div key={id}>
-                  <div className='relative flex items-center border-y bg-main-light py-3 h-14 hover:bg-opacity-50'>
+                  <div className='relative flex items-center border-y bg-main-light py-6 hover:bg-opacity-50'>
                     <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
                       {name}
                     </p>
                     <div className='text-end mr-2 absolute right-0'>
                       <ActionButton
-                        className={removeButtonStyle}
+                        className={buttonStyles.remove + ' w-[30px]'}
                         action={() => onRemoveExercise(id)}
                         buttonTitle={'-'}
                       />
@@ -131,18 +123,18 @@ export default function New() {
         <div className='mt-3'>
           <div className='flex justify-center'></div>
           <ActionButton
-            className={isDisabled ? disabledStyle : createButtonStyle}
+            className={isDisabled ? buttonStyles.disabled : buttonStyles.create}
             action={
               isDisabled
                 ? () => setOpenWarningModal(true)
                 : () => handleOnSaveRoutine()
             }
-            buttonTitle={'Finish and Save Routine'}
+            buttonTitle={'Save Routine'}
           />
         </div>
         <div className='mt-6'>
           <LinkButton
-            className={cancelButtonStyle}
+            className={buttonStyles.cancel}
             route={'/routines'}
             buttonTitle={'Cancel'}
           />

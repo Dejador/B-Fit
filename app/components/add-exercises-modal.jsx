@@ -1,14 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ActionButton from './action-button';
 import allExercises from '../../public/assets/files/allExercises.json';
 import bodyPartList from '../../public/assets/files/bodyPartList.json';
-
-const createButtonStyle =
-  'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors px-2 py-1 w-[55px] text-sm';
-const addButtonStyle =
-  'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors px-2 py-1 w-[30px] text-sm';
-const removeButtonStyle =
-  'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors px-2 py-1 w-[30px] text-sm';
+import { buttonStyles } from '../styles/button-styles';
 
 export default function AddExercisesModal({
   open,
@@ -109,7 +103,7 @@ export default function AddExercisesModal({
                             }
                           >
                             <ActionButton
-                              className={addButtonStyle}
+                              className={buttonStyles.create + ' w-[30px]'}
                               action={() => onAddExercise(id)}
                               buttonTitle={'+'}
                             />
@@ -122,7 +116,7 @@ export default function AddExercisesModal({
                             }
                           >
                             <ActionButton
-                              className={removeButtonStyle}
+                              className={buttonStyles.remove + ' w-[30px]'}
                               action={() => onRemoveExercise(id)}
                               buttonTitle={'-'}
                             />
@@ -138,9 +132,9 @@ export default function AddExercisesModal({
 
         <div className='flex fixed left-1/2 -translate-x-1/2 bottom-4'>
           <ActionButton
-            className={createButtonStyle}
-            action={() => onClose() + clearSearch()}
-            buttonTitle={'Done'}
+            className={buttonStyles.create}
+            action={() => {!isOpen ? onClose() + clearSearch() :clearSearch() }}
+            buttonTitle={isOpen ? 'Back' : 'Done'}
           />
         </div>
       </div>

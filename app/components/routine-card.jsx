@@ -2,9 +2,7 @@
 
 import LinkButton from './link-button';
 import ActionButton from './action-button';
-
-const editButtonStyle = 'w-[112px] text-secondary-light hover:text-secondary-light-b hover:cursor-pointer hover:transition-colors'
-const deleteButtonStyle = 'text-alert hover:text-alert-b hover:cursor-pointer hover:transition-colors'
+import { buttonStyles } from '../styles/button-styles';
 
 function handleDelete () {
   alert("Sorry, can't do that yet!")
@@ -18,7 +16,7 @@ export default function RoutineCard() {
           <div className='flex w-100 mb-2'>
           <div className='w-[288px] font-bold'>ROUTINE TITLE</div>
           <LinkButton
-          className={editButtonStyle}
+          className={buttonStyles.edit}
           route={'/routines/edit'}
           buttonTitle={'✎ Edit'}
         />
@@ -72,7 +70,7 @@ export default function RoutineCard() {
           </div>
         <div className='flex mt-2 justify-center'>
         <ActionButton
-          className={deleteButtonStyle}
+          className={buttonStyles.delete}
           action={() => handleDelete()}
           buttonTitle={'X Delete'}
         />
