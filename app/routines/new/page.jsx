@@ -13,8 +13,7 @@ const cancelButtonStyle =
   'font-bold text-alert hover:text-alert-b hover:cursor-pointer transition-colors';
 const createButtonStyle =
   'font-bold text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-3 py-2';
-const disabledStyle =
-  'text-white bg-grey px-3 py-2 hover:cursor-default';
+const disabledStyle = 'text-white bg-grey px-3 py-2 hover:cursor-default';
 const addButtonStyle =
   'font-bold text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors';
 
@@ -29,6 +28,19 @@ export default function New() {
   const [newRoutine, setNewRoutine] = useState({});
   const [isDisabled, setIsDisabled] = useState(true);
   const [routineName, setRoutineName] = useState('');
+  const [warningMessage, setWarningMessage] = useState('');
+
+  useEffect(() => {
+    if (selectedExerciseIds.length === 0 && routineName === '') {
+      setWarningMessage(
+        'Please enter a Routine Name and Add Exercises to continue'
+      );
+    } else if (selectedExerciseIds.length && routineName === '') {
+      setWarningMessage('Please enter a Routine Name to continue');
+    } else if (selectedExerciseIds.length === 0 && routineName !== '') {
+      setWarningMessage('Please Add Exercises to continue to continue');
+    }
+  }, [routineName, selectedExerciseIds]);
 
   function onAddExercise(id) {
     setSelectedExerciseIds([...selectedExerciseIds, id]);
@@ -54,7 +66,12 @@ export default function New() {
 
   function handleOnSaveRoutine() {
     const routineExercises = selectedExerciseIds;
-    setNewRoutine({ categoty: 'Routine', routineId: uuidv4(), routineName, routineExercises });
+    setNewRoutine({
+      categoty: 'Routine',
+      routineId: uuidv4(),
+      routineName,
+      routineExercises,
+    });
     router.replace('/routines');
   }
 
@@ -72,14 +89,14 @@ export default function New() {
         open={openWarningModal}
         onCancel={() => setOpenWarningModal(false)}
         cancelText='Ok'
-        warningMessage='Please enter a Routine Name and Add Exercises to continue'
+        warningMessage={warningMessage}
       />
       <div className='flex-col text-center mt-44'>
         <input
           className='mb-6 px-2 py-2 text-main-light font-bold text-center'
           type='text'
           placeholder='Enter Routine Name'
-          onChange={(e) => setRoutineName(e.target.value)}
+          onChange={(e) => setRoutineName((e.target.value).trimStart())}
           required
         />
         <div className='mb-3'>
@@ -115,7 +132,11 @@ export default function New() {
           <div className='flex justify-center'></div>
           <ActionButton
             className={isDisabled ? disabledStyle : createButtonStyle}
-            action={isDisabled ? () => setOpenWarningModal(true) : () => handleOnSaveRoutine()}
+            action={
+              isDisabled
+                ? () => setOpenWarningModal(true)
+                : () => handleOnSaveRoutine()
+            }
             buttonTitle={'Finish and Save Routine'}
           />
         </div>

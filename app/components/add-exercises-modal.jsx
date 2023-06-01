@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ActionButton from './action-button';
 import allExercises from '../../public/assets/files/allExercises.json';
 import bodyPartList from '../../public/assets/files/bodyPartList.json';
@@ -18,27 +18,36 @@ export default function AddExercisesModal({
   onRemoveExercise,
 }) {
   const [selectedId, setSelectedId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const inputRef = useRef(null);
 
-  useEffect(() => {
-    console.log(searchTerm);
-  }, [searchTerm]);
+  function clearSearch() {
+    setSearchTerm('');
+    setIsOpen(false);
+    setSelectedId(null);
+  }
 
   if (!open) return null;
   return (
     <div
       className='fixed w-full h-full bg-opacity-80 bg-main-dark-b z-10'
-      onClick={() => onClose()}
+      onClick={() => onClose() + clearSearch()}
     >
       <div
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className='max-w-[65%] w-full h-[75%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
+        className='max-w-[65%] w-full h-[77%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
       >
         <div className='max-w-[75%] m-auto mt-[3%] max-h-[82%] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
           {bodyPartList.map((bodyPart, index) => (
-            <div key={index}>
+            <div
+              key={index}
+              className={
+                isOpen && selectedId !== index ? 'hidden' : 'flex-initial'
+              }
+            >
               <div
                 className={
                   selectedId === index
@@ -48,8 +57,11 @@ export default function AddExercisesModal({
                 onClick={() => {
                   if (index !== selectedId) {
                     setSelectedId(index);
+                    setSearchTerm('');
+                    inputRef.current.value = '';
+                    setIsOpen(true);
                   } else {
-                    setSelectedId(null);
+                    clearSearch();
                   }
                 }}
               >
@@ -59,17 +71,18 @@ export default function AddExercisesModal({
               </div>
               <div>
                 <input
+                  ref={inputRef}
                   className={
                     selectedId === index
-                      ? 'w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light text-center'
+                      ? 'w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center'
                       : 'hidden'
                   }
-                  type='text'
+                  type='search'
                   placeholder='Search'
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <div className='max-h-[450px] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+              <div className='max-h-[425px] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
                 {allExercises
                   .filter((exercise) =>
                     exercise.name
@@ -126,7 +139,7 @@ export default function AddExercisesModal({
         <div className='flex fixed left-1/2 -translate-x-1/2 bottom-4'>
           <ActionButton
             className={createButtonStyle}
-            action={() => onClose()}
+            action={() => onClose() + clearSearch()}
             buttonTitle={'Done'}
           />
         </div>
