@@ -2,31 +2,32 @@
 
 import Dropdown from '../components/dropdown';
 import { useEffect, useState } from 'react';
+import bodyPartsList from '../../public/assets/files/bodyPartList.json'
 
 export default function ExerciseCategory()  {
-  const [bodyPartsList, setBodyPartsList] = useState([]);
+  // const [bodyPartsList, setBodyPartsList] = useState([]);
   const headersInfo: {} = {
     'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
     'X-RapidAPI-Host': process.env.NEXT_PUBLIC_RAPID_HOST,
   };
-  useEffect(() => {
-    async function getBodyParts() {
-      try {
-        const res = await fetch(
-          'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
-          {
-            method: 'GET',
-            headers: headersInfo,
-          }
-        );
-        const data = await res.json();
-        setBodyPartsList(data)
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getBodyParts();
-  }, []);
+  // useEffect(() => {
+  //   async function getBodyParts() {
+  //     try {
+  //       const res = await fetch(
+  //         'https://exercisedb.p.rapidapi.com/exercises/bodyPartList',
+  //         {
+  //           method: 'GET',
+  //           headers: headersInfo,
+  //         }
+  //       );
+  //       const data = await res.json();
+  //       setBodyPartsList(data)
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   getBodyParts();
+  // }, []);
 
   return (
     <>

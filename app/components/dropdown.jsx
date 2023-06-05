@@ -1,6 +1,8 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import ListExercises from './list-exercises';
+import bodyPartList from '../../public/assets/files/bodyPartList.json'
+import allExercises from '../../public/assets/files/allExercises.json'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -8,9 +10,10 @@ function classNames(...classes) {
 
 export default function Dropdown({ dropdownTitle, dropdownItems }) {
   const [selectedName, setSelelectedName] = useState('back');
-  const [bodyPartExercise, setBodyPartExercise] = useState([]);
-  function onDropdownItemClick(bodyPart) {
+  const [bodyPartIndex, setBodyPartIndex] = useState(0);
+  function onDropdownItemClick(bodyPart, index) {
     setSelelectedName(bodyPart);
+    setBodyPartIndex(index)
     return selectedName;
   }
 
@@ -19,32 +22,55 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
     'X-RapidAPI-Host': process.env.NEXT_PUBLIC_RAPID_HOST,
   };
 
-  useEffect(() => {
-    let completeUrlAPI =
-      'https://exercisedb.p.rapidapi.com/exercises/bodyPart/' +
-      selectedName.replace(/\s/g, '%20');
-    async function getBodyPartsExercises() {
-      try {
-        const res = await fetch(completeUrlAPI, {
-          method: 'GET',
-          headers: headersInfo,
-        });
-        const data = await res.json();
-        setBodyPartExercise(data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getBodyPartsExercises();
-  }, [selectedName]);
+  // LOAD FROM API
+  // useEffect(() => {
+  //   let completeUrlAPI =
+  //     'https://exercisedb.p.rapidapi.com/exercises/bodyPart/' +
+  //     selectedName.replace(/\s/g, '%20');
+  //   async function getBodyPartsExercises() {
+  //     try {
+  //       const res = await fetch(completeUrlAPI, {
+  //         method: 'GET',
+  //         headers: headersInfo,
+  //       });
+  //       const data = await res.json();
+  //       setBodyPartExercise(data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   getBodyPartsExercises();
+  // }, [selectedName]);
+
+// LOAD LOCALLY (NOT WORKING)
+  // useEffect(() => {
+  //   let data = selectedName.toLowerCase().replace(/\s/g, '_')+'.json';
+    
+  //   function getBodyPartsExercises() {
+  //     fetch(data
+  //   ,{
+  //     headers : { 
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //      }
+  //   }
+  //   )
+  //     .then(function(response){
+  //       newData = JSON.parse(response)
+  //       setBodyPartExercise(newData)
+  //       console.log(bodyPartExercise)
+  //     })
+  //   }
+  //   getBodyPartsExercises();
+  // }, [selectedName]);
 
   return (
     <>
       <Menu as='div' className='relative inline-block text-left'>
         <div>
-          <Menu.Button className='inline-flex w-52 md:w-72 border justify-center bg-main-light px-3 py-2 text-lg md:text-2xl text-white hover:bg-main-dark-b mt-0 md:mt-5 transition-colors'>
+          <Menu.Button className='inline-flex w-52 md:w-72 border justify-center bg-main-light px-3 py-2 text-lg md:text-xl text-white hover:bg-main-dark-b mt-0 md:mt-5 transition-colors rounded-md'>
             {dropdownTitle}{' '}
-            <p className='text-white w-full absolute -mr-40 md:-mr-56'>&#x25BD;</p>
+            <p className='text-white right-3 md:right-5 absolute'>&#x25BD;</p>
           </Menu.Button>
         </div>
 
@@ -59,7 +85,8 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
         >
           <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-40 md:w-52 ml-6 md:ml-10 text-sm md:text-base origin-top-right bg-white'>
             <div>
-              {dropdownItems.map((bodyPart, index) => (
+              {/* {dropdownItems.map((bodyPart, index) => ( */}
+              {bodyPartList.map((bodyPart, index) => (
                 <Menu.Item key={index}>
                   {({ active }) => (
                     <a
@@ -86,7 +113,7 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
       <div className='uppercase text-white font-bold  text-sm md:text-lg mt-8'>
         {selectedName}
       </div>
-      <ListExercises bodyPartExercise={bodyPartExercise} />
+      <ListExercises allExercises={allExercises} bodyPart={selectedName} bodyPartIndex={bodyPartIndex} />
     </>
   );
 }
