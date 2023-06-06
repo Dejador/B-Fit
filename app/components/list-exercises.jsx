@@ -75,7 +75,7 @@ export default function ListExercises({ allExercises, bodyPart }) {
       <div>
         <input
           ref={inputRef}
-          className='w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center'
+          className='w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none'
           type='search'
           placeholder='Search'
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -137,13 +137,14 @@ export default function ListExercises({ allExercises, bodyPart }) {
                     </p>
                   </div>
                 </div>
-                <div className='flex justify-center'>
+                {/* UPDATE TO API - GIF URLS CHENGED AND NEED TO BE FETCHED DIRECTLY FROM API */}
+                {/* <div className='flex justify-center'>
                   <img
                     className='mb-6 w-[250px] md:w-[500px] bg-white border-secondary-light border-4 rounded-lg'
                     src={gifUrl}
                     alt='Gif Example'
                   />
-                </div>
+                </div> */}
               </div>
             </div>
           ))}

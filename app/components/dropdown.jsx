@@ -68,7 +68,7 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
     <>
       <Menu as='div' className='relative inline-block text-left'>
         <div>
-          <Menu.Button className='inline-flex w-52 md:w-72 border justify-center bg-main-light px-3 py-2 text-lg md:text-xl text-white hover:bg-main-dark-b mt-0 md:mt-5 transition-colors rounded-md'>
+          <Menu.Button className='inline-flex w-52 md:w-72 border justify-center bg-main-light px-3 py-2 text-lg md:text-xl text-white hover:bg-main-dark-b mt-0 transition-colors rounded-md'>
             {dropdownTitle}{' '}
             <p className='text-white right-3 md:right-5 absolute'>&#x25BD;</p>
           </Menu.Button>

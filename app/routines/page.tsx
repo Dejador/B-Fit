@@ -5,7 +5,7 @@ import { buttonStyles } from '../styles/button-styles';
 export default function Routines() {
   return (
     <>
-      <div className='mt-32 justify-center text-center align-middle flex'>
+      <div className='mt-8 md:mt-32 justify-center text-center align-middle flex'>
         <LinkButton
           className={buttonStyles.create}
           route={'/routines/new'}

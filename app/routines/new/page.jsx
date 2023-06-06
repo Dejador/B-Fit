@@ -83,7 +83,7 @@ export default function New() {
         cancelText='Ok'
         warningMessage={warningMessage}
       />
-      <div className='flex-col text-center mt-44'>
+      <div className='flex-col text-center mt-8 md:mt-44'>
         <input
           className='mb-6 px-2 py-2 text-main-light font-bold text-center'
           type='text'

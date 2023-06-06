@@ -2,6 +2,8 @@ export const buttonStyles = {
   // NAVBAR BUTTONS
   navbarButtonStyle:
     'border text-sm bg-main-light hover:bg-main-dark-b text-white px-3 h-[70%] my-auto leading-8 transition-colors rounded',
+  navbarActiveButtonStyle:
+    'border text-sm bg-secondary-light text-white px-3 h-[70%] my-auto leading-8 rounded',
   mobileMenuButtonStyle:
     'text-sm hover:bg-main-dark-b w-[98%] ml-[1%] absolute left-0 py-2 text-white transition-colors',
 
