@@ -6,8 +6,10 @@ import LinkButton from './link-button';
 import { buttonStyles } from '../styles/button-styles';
 import { mainPages } from '../common/data';
 import Image from 'next/image';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
+  const { currentUser } = useAuth();
   const pathName = usePathname();
   const [isActive, setActive] = useState(false);
 
@@ -51,16 +53,18 @@ export default function Navbar() {
           ))}
           <LinkButton
             className={
-              pathName.includes('login') || pathName.includes('signup')
+              pathName.includes('login') || pathName.includes('register')
                 ? buttonStyles.navbarActiveButtonStyle
                 : buttonStyles.navbarButtonStyle
             }
-            route={'/login'}
-            buttonTitle={'LogIn | SignUp'}
+            route={currentUser === null ? '/login' : '/account'}
+            buttonTitle={
+              currentUser === null ? 'LogIn | Register' : 'My Account'
+            }
           />
         </div>
         <div className=''>
-          <h1 className='text-white font-bold md:fixed md:left-2/4 md:translate-x-[-50%] text-4xl md:text-center mt-14'>
+          <h1 className='text-white font-bold md:fixed md:left-2/4 md:translate-x-[-50%] text-4xl md:text-center mt-14 select-none'>
             B-Fit!
           </h1>
         </div>
@@ -100,16 +104,13 @@ export default function Navbar() {
                 buttonTitle={'Home'}
               />
             </div>
-            <div
-              className={
-                pathName.includes('login') ? 'hidden' : 'flex-col flex h-10'
-              }
-              onClick={hideMenu}
-            >
+            <div className={'flex-col flex h-10'} onClick={hideMenu}>
               <LinkButton
                 className={buttonStyles.mobileMenuButtonStyle}
-                route={'/login'}
-                buttonTitle={'LogIn | SignUp'}
+                route={currentUser === null ? '/login' : '/account'}
+                buttonTitle={
+                  currentUser === null ? 'LogIn | Register' : 'My Account'
+                }
               />
             </div>
 

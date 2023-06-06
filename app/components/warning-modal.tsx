@@ -26,12 +26,12 @@ export default function WarningModal({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className='max-w-[35%] fixed top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
+        className='max-w-[35%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
       >
-        <div className='text-white justify-center align-middle flex h-[80%]'>
+        <div className='text-white justify-center align-middle flex h-[80%] select-none'>
           <p className='flex text-center items-center px-12 py-6'>{warningMessage}</p>
         </div>
-        <div className='flex justify-center gap-4 pb-4'>
+        <div className='flex justify-center gap-4 pb-4 select-none'>
         <div className=''>
           <ActionButton
             className={confirmText? buttonStyles.cancel : buttonStyles.confirm}

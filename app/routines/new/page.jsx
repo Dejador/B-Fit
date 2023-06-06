@@ -65,8 +65,6 @@ export default function New() {
     router.replace('/routines');
   }
 
-  console.log(newRoutine)
-
   return (
     <>
       <AddExercisesModal
@@ -85,20 +83,20 @@ export default function New() {
       />
       <div className='flex-col text-center mt-8 md:mt-44'>
         <input
-          className='mb-6 px-2 py-2 text-main-light font-bold text-center'
+          className='border-2 mb-6 px-2 py-2 text-main-light font-bold text-center outline-none focus:border-secondary-light-b'
           type='text'
           placeholder='Enter Routine Name'
           onChange={(e) => setRoutineName((e.target.value).trimStart())}
           required
         />
-        <div className='mb-3'>
+        <div className='mb-3 select-none'>
           <ActionButton
             className={buttonStyles.add}
             action={() => setOpenModal(true)}
             buttonTitle={'+ Add Exercise(s)'}
           />
         </div>
-        <div className='max-w-[50%] max-h-[355px] pr-1 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b overflow-auto m-auto my-3'>
+        <div className='max-w-[50%] max-h-[355px] pr-1 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b overflow-auto m-auto my-3 select-none'>
           {selectedExerciseIds.map((index) =>
             allExercises
               .filter((exercise) => exercise.id === index)

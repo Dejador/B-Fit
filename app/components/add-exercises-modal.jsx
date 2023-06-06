@@ -34,7 +34,7 @@ export default function AddExercisesModal({
         }}
         className='max-w-[98%] md:max-w-[65%] w-full h-[77%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
       >
-        <div className='max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+        <div className='max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
           {bodyPartList.map((bodyPart, index) => (
             <div
               key={index}
@@ -68,7 +68,7 @@ export default function AddExercisesModal({
                   ref={inputRef}
                   className={
                     selectedId === index
-                      ? 'w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none'
+                      ? 'border-2 w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
                       : 'hidden'
                   }
                   type='search'

@@ -12,7 +12,7 @@ export default function RoutineCard() {
   return (
     <>
       <div className='mt-8 justify-center text-center align-middle flex'>
-        <div className='text-white text-center'>
+        <div className='text-white text-center  select-none'>
           <div className='flex w-100 mb-2'>
           <div className='w-[288px] font-bold'>ROUTINE TITLE</div>
           <LinkButton

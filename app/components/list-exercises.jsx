@@ -26,7 +26,7 @@ export default function ListExercises({ allExercises, bodyPart }) {
 
   return (
     <>
-      <div className='text-secondary-light font-bold text-right w-[350px] md:w-[675px] mx-auto mt-2 text-sm md:text-base hover:text-secondary-light-b'>
+      <div className='text-secondary-light text-right w-[350px] md:w-[675px] mx-auto mt-2 text-sm md:text-base hover:text-secondary-light-b select-none'>
         <button onClick={() => handleToggleAll() + clearSearch()}>
           {isActiveAll ? '- Collapse All' : '+ Expand All'}
         </button>
@@ -75,13 +75,13 @@ export default function ListExercises({ allExercises, bodyPart }) {
       <div>
         <input
           ref={inputRef}
-          className='w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none'
+          className='border-2 w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
           type='search'
           placeholder='Search'
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className='max-h-[450px] w-[350px] md:w-[675px] mx-auto mt-6 bg-secondary-a  scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+      <div className='max-h-[450px] w-[350px] md:w-[675px] mx-auto mt-6 bg-secondary-a  select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
         {allExercises
           .filter((exercise) =>
             exercise.name.toLowerCase().includes(searchTerm.toLowerCase())

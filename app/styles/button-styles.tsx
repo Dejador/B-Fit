@@ -9,14 +9,14 @@ export const buttonStyles = {
 
   // MAIN BUTTONS
   confirm:
-    'font-bold text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors',
+    'text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors',
   disabled:
     'text-white bg-secondary-light hover:cursor-default border border-white px-2 py-1 text-sm opacity-70 rounded',
   create:
     'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded',
   cancel:
-    'font-bold text-alert hover:text-alert-b hover:cursor-pointer transition-colors',
-  add: 'font-bold text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors',
+    'text-alert hover:text-alert-b hover:cursor-pointer transition-colors',
+  add: 'text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors',
   remove:
     'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded',
 
