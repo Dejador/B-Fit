@@ -7,8 +7,6 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  deleteUser,
-  reauthenticateWithCredential
 } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -24,8 +22,7 @@ export function AuthProvider({ children }) {
   const userInfo = useRef();
 
   function register(email, password) {
-    createUserWithEmailAndPassword(auth, email, password);
-    return;
+    return createUserWithEmailAndPassword(auth, email, password);
   }
 
   function login(email, password) {
@@ -34,11 +31,6 @@ export function AuthProvider({ children }) {
 
   function logout() {
     return signOut(auth);
-  }
-
-  function deleteUserProfile() {
-    reauthenticateWithCredential(auth)
-    return deleteUser(currentUser);
   }
 
   useEffect(() => {
@@ -54,7 +46,6 @@ export function AuthProvider({ children }) {
     login,
     register,
     logout,
-    deleteUserProfile,
     userInfo,
   };
 

@@ -1,17 +1,21 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/app/utils/firebase';
+import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation';
+import { buttonStyles } from '@/app/styles/button-styles';
 import LinkButton from '@/app/components/link-button';
 import ActionButton from '@/app/components/action-button';
 import AddExercisesModal from '@/app/components/add-exercises-modal';
 import WarningModal from '@/app/components/warning-modal';
 import allExercises from '../../../public/assets/files/allExercises.json';
-import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { useRouter } from 'next/navigation';
-import { buttonStyles } from '@/app/styles/button-styles';
+import { useAuth } from '../../context/AuthContext';
 
 export default function New() {
   const router = useRouter();
+  const { currentUser } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [selectedExerciseIds, setSelectedExerciseIds] = useState([]);
@@ -54,16 +58,34 @@ export default function New() {
     handleIsDisabled();
   }, [routineName, selectedExerciseIds]);
 
-  function handleOnSaveRoutine() {
+  async function handleOnSaveRoutine() {
     const routineExercises = selectedExerciseIds;
     setNewRoutine({
-      categoty: 'Routine',
+      category: 'Routine',
       routineId: uuidv4(),
       routineName,
       routineExercises,
     });
     router.replace('/routines');
   }
+
+  useEffect(() => {
+      async function saveToDB() {
+        const userRef = doc(db, 'users', currentUser.uid);
+        await setDoc(
+          userRef,
+          {
+            routines: {
+              [newRoutine.routineId]: newRoutine,
+            },
+          },
+          { merge: true }
+        );
+      }
+      if (newRoutine.category !== 'Routine'){return
+      }
+      saveToDB();
+  }, [newRoutine]);
 
   return (
     <>
@@ -86,7 +108,7 @@ export default function New() {
           className='border-2 mb-6 px-2 py-2 text-main-light font-bold text-center outline-none focus:border-secondary-light-b'
           type='text'
           placeholder='Enter Routine Name'
-          onChange={(e) => setRoutineName((e.target.value).trimStart())}
+          onChange={(e) => setRoutineName(e.target.value.trimStart())}
           required
         />
         <div className='mb-3 select-none'>

@@ -27,9 +27,20 @@ export default function Login() {
       setError('Please enter Email and Password');
       return;
     }
-
-    await register(email, password);
-    router.back();
+    try {
+      await register(email, password);
+      router.back();
+    } catch (err) {
+      if (err.code === 'auth/email-already-in-use') {
+        setError('User already registered');
+      } else if (err.code === 'auth/weak-password'){
+        setError('Password must be al least 6 characters long');
+      }
+       else {
+        setError('There was a problem creating your account, please try again');
+      }
+    }
+    return;
   }
 
   return (
@@ -38,42 +49,49 @@ export default function Login() {
         <h1 className='text-white font-bold text-md md:text-xl mb-2 select-none'>
           Register
         </h1>
-        {error && (
-          <div className='text-alert select-none text-center px-2 py-1 border border-alert text-sm min-w-[50%] md:min-w-[20%]'>
-            {error}
+        {currentUser && (
+          <div className='text-white select-none'>Already registered</div>
+        )}
+        {!currentUser && (
+          <div className='flex flex-col text-center min-w-[50%] md:min-w-[20%]'>
+            {error && (
+              <div className='text-alert select-none text-center px-2 py-1 border border-alert text-sm'>
+                {error}
+              </div>
+            )}
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type='email'
+              placeholder='Email Address'
+              className='border-2 w-full mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
+            />
+            <input
+              value={password}
+              onKeyDown={handleKeypress}
+              onChange={(e) => setPassword(e.target.value)}
+              type='password'
+              placeholder='Password'
+              className='border-2 w-full mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
+            />
+            <div className='mt-2'>
+              <ActionButton
+                className={buttonStyles.create}
+                action={() => onSubmit()}
+                buttonTitle={'Submit'}
+                type='submit'
+              />
+            </div>
+            <div className='text-white mt-7 text-sm select-none min-w-[50%] md:min-w-[20%] border-t border-white text-center pt-3'>
+              Already have an account? <span> </span>
+              <LinkButton
+                className={buttonStyles.add}
+                route={'/login'}
+                buttonTitle={'Log In'}
+              />
+            </div>
           </div>
         )}
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type='email'
-          placeholder='Email Address'
-          className='border-2 min-w-[50%] md:min-w-[20%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
-        />
-        <input
-          value={password}
-          onKeyDown={handleKeypress}
-          onChange={(e) => setPassword(e.target.value)}
-          type='password'
-          placeholder='Password'
-          className='border-2 min-w-[50%] md:min-w-[20%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
-        />
-        <div className='mt-2'>
-          <ActionButton
-            className={buttonStyles.create}
-            action={() => onSubmit()}
-            buttonTitle={'Submit'}
-            type='submit'
-          />
-        </div>
-        <div className='text-white mt-7 text-sm select-none min-w-[50%] md:min-w-[20%] border-t border-white text-center pt-3'>
-          Already have an account? <span> </span>
-          <LinkButton
-            className={buttonStyles.add}
-            route={'/login'}
-            buttonTitle={'Log In'}
-          />
-        </div>
       </div>
     </>
   );
