@@ -10,6 +10,8 @@ export const buttonStyles = {
   // MAIN BUTTONS
   confirm:
     'text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors',
+  confirmAlternate:
+    'text-secondary-alt hover:text-secondary-alt-b hover:cursor-pointer transition-colors',
   disabled:
     'text-white bg-secondary-light hover:cursor-default border border-white px-2 py-1 text-sm opacity-70 rounded',
   create:

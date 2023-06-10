@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/app/utils/firebase';
-import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
 import { buttonStyles } from '@/app/styles/button-styles';
 import LinkButton from '@/app/components/link-button';
@@ -13,7 +12,7 @@ import WarningModal from '@/app/components/warning-modal';
 import allExercises from '../../../public/assets/files/allExercises.json';
 import { useAuth } from '../../context/AuthContext';
 
-export default function NewRoutine() {
+export default function EditRoutine() {
   const router = useRouter();
   const { currentUser } = useAuth();
   const [openModal, setOpenModal] = useState(false);
@@ -82,7 +81,6 @@ export default function NewRoutine() {
     const routineExercises = selectedExerciseIds;
     setNewRoutine({
       category: 'Routine',
-      routineId: uuidv4(),
       routineName,
       routineExercises,
       routineCreationDate: new Date().getTime(),
@@ -201,7 +199,7 @@ export default function NewRoutine() {
                 ? () => setOpenWarningModal(true)
                 : () => handleOnSaveRoutine()
             }
-            buttonTitle={'Save Routine'}
+            buttonTitle={'Update Routine'}
           />
         </div>
         <div className='mt-6'>
