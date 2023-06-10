@@ -59,7 +59,7 @@ export default function AddExercisesModal({
                   }
                 }}
               >
-                <p className='text-white text-center capitalize text-sm md:text-base px-2 font-bold'>
+                <p className='text-white text-center capitalize text-sm md:text-base px-2'>
                   {bodyPart}
                 </p>
               </div>

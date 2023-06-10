@@ -112,7 +112,7 @@ export default function ListExercises({ allExercises, bodyPart }) {
                   }
                 }}
               >
-                <p className='text-white text-center capitalize text-sm md:text-base px-2 font-bold'>
+                <p className='text-white text-center capitalize text-sm md:text-base px-2'>
                   {name}
                 </p>
               </div>
@@ -123,13 +123,13 @@ export default function ListExercises({ allExercises, bodyPart }) {
               >
                 <div className='flex-row md:flex text-sm md:text-base justify-evenly px-6 py-6'>
                   <div className='flex mb-2 md:mb-0'>
-                    <p className='text-white text-left capitalize font-bold'>
+                    <p className='text-white text-left capitalize'>
                       Target Muscle:<span>&nbsp;</span>
                     </p>
                     <p className='text-white text-left capitalize'>{target}</p>
                   </div>
                   <div className='flex'>
-                    <p className='text-white text-left capitalize font-bold'>
+                    <p className='text-white text-left capitalize'>
                       Equipment:<span>&nbsp;</span>
                     </p>
                     <p className='text-white text-left capitalize'>

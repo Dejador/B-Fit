@@ -110,7 +110,7 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
           </Menu.Items>
         </Transition>
       </Menu>
-      <div className='uppercase text-white font-bold  text-sm md:text-lg mt-8 select-none'>
+      <div className='uppercase text-white text-sm md:text-lg mt-8 select-none'>
         {selectedName}
       </div>
       <ListExercises allExercises={allExercises} bodyPart={selectedName} bodyPartIndex={bodyPartIndex} />

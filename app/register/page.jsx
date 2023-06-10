@@ -45,17 +45,17 @@ export default function Login() {
 
   return (
     <>
-      <div className='flex h-screen fixed top-0 w-full items-center justify-center flex-col'>
-        <h1 className='text-white font-bold text-md md:text-xl mb-2 select-none'>
+      <div className='flex h-screen fixed top-0 w-full items-center justify-center flex-col select-none'>
+        <h1 className='text-white text-md md:text-xl mb-2'>
           Register
         </h1>
         {currentUser && (
-          <div className='text-white select-none'>Already registered</div>
+          <div className='text-white'>Already registered</div>
         )}
         {!currentUser && (
           <div className='flex flex-col text-center min-w-[50%] md:min-w-[20%]'>
             {error && (
-              <div className='text-alert select-none text-center px-2 py-1 border border-alert text-sm'>
+              <div className='text-alert text-center px-2 py-1 border border-alert text-sm'>
                 {error}
               </div>
             )}
@@ -82,7 +82,7 @@ export default function Login() {
                 type='submit'
               />
             </div>
-            <div className='text-white mt-7 text-sm select-none min-w-[50%] md:min-w-[20%] border-t border-white text-center pt-3'>
+            <div className='text-white mt-7 text-sm min-w-[50%] md:min-w-[20%] border-t border-white text-center pt-3'>
               Already have an account? <span> </span>
               <LinkButton
                 className={buttonStyles.add}

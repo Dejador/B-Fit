@@ -20,7 +20,7 @@ export const buttonStyles = {
   remove:
     'text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded',
 
-  edit: 'w-[112px] text-secondary-light hover:text-secondary-light-b hover:cursor-pointer hover:transition-colors',
+  edit: 'text-secondary-light hover:text-secondary-light-b hover:cursor-pointer hover:transition-colors',
   delete:
     'text-alert hover:text-alert-b hover:cursor-pointer hover:transition-colors',
 };

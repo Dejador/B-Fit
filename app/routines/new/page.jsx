@@ -33,6 +33,8 @@ export default function New() {
       setWarningMessage('Please enter a Routine Name to continue');
     } else if (selectedExerciseIds.length === 0 && routineName !== '') {
       setWarningMessage('Please Add Exercises to continue');
+    } else if (!currentUser) {
+      setWarningMessage('Please Login or Register to manage Routines');
     }
   }, [routineName, selectedExerciseIds]);
 
@@ -47,7 +49,7 @@ export default function New() {
   }
 
   function handleIsDisabled() {
-    if (routineName.length && selectedExerciseIds.length) {
+    if (routineName.length && selectedExerciseIds.length && currentUser) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -58,7 +60,7 @@ export default function New() {
     handleIsDisabled();
   }, [routineName, selectedExerciseIds]);
 
-  async function handleOnSaveRoutine() {
+  function handleOnSaveRoutine() {
     const routineExercises = selectedExerciseIds;
     setNewRoutine({
       category: 'Routine',
@@ -66,25 +68,27 @@ export default function New() {
       routineName,
       routineExercises,
     });
-    router.replace('/routines');
   }
 
   useEffect(() => {
-      async function saveToDB() {
-        const userRef = doc(db, 'users', currentUser.uid);
-        await setDoc(
-          userRef,
-          {
-            routines: {
-              [newRoutine.routineId]: newRoutine,
-            },
+    async function saveToDB() {
+      const userRef = doc(db, 'users', currentUser.uid);
+      const key = newRoutine.routineId;
+      await setDoc(
+        userRef,
+        {
+          routines: {
+            [key]: newRoutine,
           },
-          { merge: true }
-        );
-      }
-      if (newRoutine.category !== 'Routine'){return
-      }
-      saveToDB();
+        },
+        { merge: true }
+      );
+    }
+    if (newRoutine.category !== 'Routine') {
+      return;
+    }
+    saveToDB();
+    router.push('/routines');
   }, [newRoutine]);
 
   return (
@@ -104,8 +108,25 @@ export default function New() {
         warningMessage={warningMessage}
       />
       <div className='flex-col text-center mt-8 md:mt-44'>
+        {!currentUser && (
+          <div className='text-white text-center px-2 py-1 mb-4 w-[350px] border border-alert text-sm mx-auto'>
+            Please{' '}
+            <LinkButton
+              className={buttonStyles.add}
+              route={'/login'}
+              buttonTitle={'Login'}
+            />{' '}
+            or{' '}
+            <LinkButton
+              className={buttonStyles.add}
+              route={'/register'}
+              buttonTitle={'Register'}
+            />{' '}
+            to continue
+          </div>
+        )}
         <input
-          className='border-2 mb-6 px-2 py-2 text-main-light font-bold text-center outline-none focus:border-secondary-light-b'
+          className='border-2 mb-6 px-2 py-1 text-sm text-main-light text-center outline-none focus:border-secondary-light-b'
           type='text'
           placeholder='Enter Routine Name'
           onChange={(e) => setRoutineName(e.target.value.trimStart())}

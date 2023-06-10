@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/dropdown.jsx", "app/components/list-exercises.jsx", "app/exercises/page.tsx", "app/components/navbar-button.tsx", "app/page.jsx", "app/components/add-exercises-modal.jsx", "app/routines/new/page.jsx", "app/login/page.jsx", "app/components/navbar.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/components/dropdown.jsx", "app/components/list-exercises.jsx", "app/exercises/page.tsx", "app/components/navbar-button.tsx", "app/page.jsx", "app/components/add-exercises-modal.jsx", "app/routines/new/page.jsx", "app/login/page.jsx", "app/components/navbar.tsx", "app/routines/page.jsx"],
   "exclude": ["node_modules"]
 }

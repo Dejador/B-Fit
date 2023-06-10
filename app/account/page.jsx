@@ -30,17 +30,17 @@ export default function Account() {
 
   return (
     <>
-      <div className='flex min-h-[80vh] items-center justify-center flex-col'>
-        <h1 className='text-white font-bold text-xl'>My Account</h1>
+      <div className='flex min-h-[80vh] items-center justify-center flex-col select-none'>
+        <h1 className='text-white text-xl'>My Account</h1>
         {currentUser && !isGuest && (
-          <div className='mt-2 text-white select-none'>
-            Logged In as{' '}
+          <div className='mt-2 text-white'>
+            Logged in as{' '}
             <span className='text-secondary-light-b'>{currentUser.email}</span>
           </div>
         )}
         {isGuest && (
-          <div className='mt-2 text-white select-none'>
-            Logged In as <span className='text-secondary-light-b'>Guest</span>
+          <div className='mt-2 text-white'>
+            Logged in as <span className='text-secondary-light-b'>Guest</span>
           </div>
         )}
         {!currentUser && (
