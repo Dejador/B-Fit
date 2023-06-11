@@ -26,7 +26,7 @@ export default function WarningModal({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className='max-w-[35%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
+        className='w-[90%] md:w-[35%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
       >
         <div className='text-white justify-center align-middle flex h-[80%] select-none'>
           <p className='flex text-center items-center px-12 py-6'>{warningMessage}</p>

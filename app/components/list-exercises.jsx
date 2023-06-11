@@ -75,7 +75,7 @@ export default function ListExercises({ allExercises, bodyPart }) {
       <div>
         <input
           ref={inputRef}
-          className='border-2 w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
+          className='border-2 w-[75%] md:w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
           type='search'
           placeholder='Search'
           onChange={(e) => setSearchTerm(e.target.value)}

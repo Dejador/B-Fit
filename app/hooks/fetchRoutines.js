@@ -10,23 +10,25 @@ export default function useFetchRoutines() {
 
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const docRef = doc(db, 'users', currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-        //   console.log(docSnap.data());
-        setRoutines(docSnap.data().routines)
+  const getData = (isDeleted)  => {
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const docRef = doc(db, 'users', currentUser.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+          setRoutines(docSnap.data().routines)
+          }
+        } catch (err) {
+          setError('Could not load data, please try again');
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        setError('Could not load data, please try again');
-      } finally {
-        setLoading(false);
       }
-    }
-    fetchData()
-  }, []);
+      fetchData()
+    }, [isDeleted]);
+  }
 
-  return { loading, error, routines };
+
+  return { loading, error, routines, getData };
 }

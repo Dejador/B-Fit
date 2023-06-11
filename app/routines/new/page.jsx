@@ -170,7 +170,7 @@ export default function NewRoutine() {
             buttonTitle={'+ Add Exercise(s)'}
           />
         </div>
-        <div className='max-w-[50%] max-h-[355px] pr-1 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b overflow-auto m-auto my-3 select-none'>
+        <div className='max-w-[90%]  md:max-w-[50%] max-h-[355px] pr-1 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b overflow-auto m-auto my-3 select-none'>
           {selectedExerciseIds.map((index) =>
             allExercises
               .filter((exercise) => exercise.id === index)

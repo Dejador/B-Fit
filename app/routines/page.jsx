@@ -12,11 +12,14 @@ import { useRouter } from 'next/navigation';
 import WarningModal from '../components/warning-modal';
 
 export default function Routines() {
-  const { routines, loading, error } = useFetchRoutines();
+  const { routines, loading, error, getData } = useFetchRoutines();
   const { currentUser } = useAuth();
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [deleteRoutineId, setDeleteRoutineId] = useState(null);
+  const [isDeleted, setIsDeleted] = useState(false);
   const router = useRouter();
+
+  getData(isDeleted);
 
   function handleDelete(routineId) {
     setOpenWarningModal(true);
@@ -39,19 +42,26 @@ export default function Routines() {
     } catch (err) {
       console.log(err);
     }
-    setOpenWarningModal(false);
-    router.push('/routines/');
+    setIsDeleted(true);
   }
 
   return (
     <>
       <WarningModal
         open={openWarningModal}
-        onCancel={() => setOpenWarningModal(false)}
-        cancelText={'Cancel'}
-        confirmText={'Yes, Delete'}
+        onCancel={
+          isDeleted
+            ? () => setOpenWarningModal(false) + setIsDeleted(false)
+            : () => setOpenWarningModal(false)
+        }
+        cancelText={isDeleted ? 'Ok' : 'Cancel'}
+        confirmText={isDeleted ? '' : 'Yes, Delete'}
         onConfirm={() => handleDeleteConfirmation()}
-        warningMessage={'The selected routine will be deleted, continue?'}
+        warningMessage={
+          isDeleted
+            ? 'Routine Deleted'
+            : 'The selected routine will be deleted, continue?'
+        }
       />
       <div className='mt-8 md:mt-32 justify-center text-center align-middle flex'>
         <LinkButton
@@ -60,7 +70,7 @@ export default function Routines() {
           buttonTitle={'+ Create New Routine'}
         />
       </div>
-      <div className='flex justify-center gap-8 flex-wrap max-h-[550px] overflow-auto mt-4 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b'>
+      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-4 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b'>
         {routines &&
           !loading &&
           currentUser &&
