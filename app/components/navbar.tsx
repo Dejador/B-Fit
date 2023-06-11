@@ -1,15 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import LinkButton from './link-button';
-
-const navbarButtonStyle =
-  'border text-sm bg-main-light hover:bg-main-dark-b text-white px-6 h-[70%] my-auto leading-8 transition-colors';
-
-const mobileMenuButtonStyle =
-  'text-sm hover:bg-main-dark-b w-[98%] ml-[1%] absolute left-0 py-2 text-white transition-colors';
+import { buttonStyles } from '../styles/button-styles';
+import { mainPages } from '../common/data';
+import Image from 'next/image';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
+  const { currentUser } = useAuth();
+  const pathName = usePathname();
   const [isActive, setActive] = useState(false);
 
   const handleToggle = () => {
@@ -21,85 +22,115 @@ export default function Navbar() {
 
   return (
     <>
-      <div className='hidden fixed md:flex md:w-full px-8 pt-2'>
-        {/* <div className=''>
-          <LinkButton className={navbarButtonStyle} route={'/'} buttonTitle={'Home'} />
-        </div> */}
+      {/* DESKTOP */}
+      <div className='hidden fixed md:flex md:w-full px-8 pt-2 z-10'>
         <div className='w-12 align-middle hover:animate-spin'>
-          <a href='/'>
-            <img src='/assets/images/main_logo.png' alt='home_logo' />
-          </a>
+          <LinkButton
+            className={'w-12 h-12 absolute'}
+            route={'/'}
+            buttonTitle={''}
+          />
+          <Image
+            src='/assets/images/main_logo.png'
+            alt='B-Fit Logo'
+            width={48}
+            height={48}
+          />
         </div>
-        <div className='md:ml-auto align-middle flex md:space-x-4'>
+        <div className={'md:ml-auto align-middle flex md:space-x-4'}>
+          {mainPages.map((page, index) => (
+            <div key={index} className={pathName === '/' ? 'hidden' : 'flex'}>
+              <LinkButton
+                className={
+                  pathName.includes(page.route)
+                    ? buttonStyles.navbarActiveButtonStyle
+                    : buttonStyles.navbarButtonStyle
+                }
+                route={page.route}
+                buttonTitle={page.title}
+              />
+            </div>
+          ))}
           <LinkButton
-            className={navbarButtonStyle}
-            route={'/exercises'}
-            buttonTitle={'Exercises'}
-          />
-          <LinkButton
-            className={navbarButtonStyle}
-            route={'/routines'}
-            buttonTitle={'Routines'}
-          />
-          <LinkButton
-            className={navbarButtonStyle}
-            route={'/weekly'}
-            buttonTitle={'Weekly Plan'}
+            className={
+              pathName.includes('login') || pathName.includes('register')
+                ? buttonStyles.navbarActiveButtonStyle
+                : buttonStyles.navbarButtonStyle
+            }
+            route={currentUser === null ? '/login' : '/account'}
+            buttonTitle={
+              currentUser === null ? 'LogIn | Register' : 'My Account'
+            }
           />
         </div>
         <div className=''>
-          <h1 className='text-white font-bold md:fixed md:left-2/4 md:translate-x-[-50%] text-4xl md:text-center mt-14'>
+          <h1 className='text-white font-bold md:fixed md:left-2/4 md:translate-x-[-50%] text-4xl md:text-center mt-14 select-none'>
             B-Fit!
           </h1>
         </div>
       </div>
+      {/* MOBILE */}
       <div className='w-full flex justify-center'>
         <div
-          className='md:hidden flex w-12 h-12 mt-6 cursor-pointer hover:animate-spin'
+          className={
+            isActive
+              ? 'md:hidden mt-6 cursor-pointer hover:animate-spin z-10'
+              : 'md:hidden mt-6 cursor-pointer z-10'
+          }
           onClick={handleToggle}
         >
-          <img
+          <Image
             src='/assets/images/main_logo.png'
-            width='100%'
-            alt='b-fit-logo'
+            alt='B-Fit Logo'
+            width={48}
+            height={48}
           />
         </div>
         <div className='md:hidden absolute top-[86px] z-10'>
           <div
             className={
               isActive
-                ? 'w-36 h-[158px] text-center bg-main-light border-white border'
+                ? 'w-36 text-center bg-main-light border-white border'
                 : 'hidden'
             }
           >
-            <div className='mb-10' onClick={hideMenu}>
+            <div
+              className={pathName === '/' ? 'hidden' : 'flex-col flex h-10'}
+              onClick={hideMenu}
+            >
               <LinkButton
-                className={mobileMenuButtonStyle}
+                className={buttonStyles.mobileMenuButtonStyle}
                 route={'/'}
                 buttonTitle={'Home'}
               />
             </div>
-            <div className='mb-20' onClick={hideMenu}>
+            <div className={'flex-col flex h-10'} onClick={hideMenu}>
               <LinkButton
-                className={mobileMenuButtonStyle}
-                route={'/exercises'}
-                buttonTitle={'Exercises'}
+                className={buttonStyles.mobileMenuButtonStyle}
+                route={currentUser === null ? '/login' : '/account'}
+                buttonTitle={
+                  currentUser === null ? 'LogIn | Register' : 'My Account'
+                }
               />
             </div>
-            <div className='mb-[120px]' onClick={hideMenu}>
-              <LinkButton
-                className={mobileMenuButtonStyle}
-                route={'/routines'}
-                buttonTitle={'Routines'}
-              />
-            </div>
-            <div onClick={hideMenu}>
-              <LinkButton
-                className={mobileMenuButtonStyle}
-                route={'/weekly'}
-                buttonTitle={'Weekly Plan'}
-              />
-            </div>
+
+            {mainPages.map((page, index) => (
+              <div
+                key={index}
+                className={
+                  pathName.includes(page.route) || pathName === '/'
+                    ? 'hidden'
+                    : 'flex-col flex h-10'
+                }
+                onClick={hideMenu}
+              >
+                <LinkButton
+                  className={buttonStyles.mobileMenuButtonStyle}
+                  route={page.route}
+                  buttonTitle={page.title}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
