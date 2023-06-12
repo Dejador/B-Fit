@@ -142,18 +142,18 @@ export default function NewRoutine() {
       <div className='flex-col text-center mt-8 md:mt-44'>
         {!currentUser && (
           <div className='text-white text-center px-2 py-1 mb-4 w-[350px] border border-alert text-sm mx-auto'>
-            Please{' '}
+            Please<span>&nbsp;</span>
             <LinkButton
               className={buttonStyles.add}
               route={'/login'}
               buttonTitle={'Login'}
-            />{' '}
-            or{' '}
+            /><span>&nbsp;</span>
+            or<span>&nbsp;</span>
             <LinkButton
               className={buttonStyles.add}
               route={'/register'}
               buttonTitle={'Register'}
-            />{' '}
+            /><span>&nbsp;</span>
             to continue
           </div>
         )}

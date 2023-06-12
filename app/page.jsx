@@ -5,7 +5,7 @@ import { mainPages } from './common/data';
 export default function Home() {
 
   const buttonStyle =
-    'border text-lg md:text-2xl bg-main-light hover:bg-main-dark-b text-white py-9 md:py-12 opacity-90 transition-colors rounded-lg block text-center w-52 md:w-60';
+    'border border-white text-base md:text-2xl bg-main-light hover:bg-main-dark-b text-secondary-light-b py-3 md:py-6 opacity-90 transition-colors rounded-lg block text-center w-52 md:w-60';
 
   return (
     <>
@@ -14,8 +14,10 @@ export default function Home() {
           <div key={index}>
             <LinkButton
               className={buttonStyle}
+              descriptionStyle={'text-sm px-4 mt-2 text-white'}
               route={page.route}
               buttonTitle={page.title}
+              buttonDescription={page.description}
             />
           </div>
         ))}
