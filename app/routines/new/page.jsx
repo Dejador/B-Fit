@@ -132,8 +132,10 @@ export default function NewRoutine() {
             ? () => router.push('/routines')
             : () => setOpenWarningModal(false)
         }
-        cancelText={!isDisabled && !error ? 'View Routines' : 'Ok'}
-        confirmText={!isDisabled && !error ? 'Add More' : ''}
+        mainButtonText={!isDisabled && !error ? 'View Routines' : 'Ok'}
+        mainButtonStyle={!isDisabled && !error ? buttonStyles.confirmAlternate : buttonStyles.confirm}
+        altButtonText={!isDisabled && !error ? 'Add More' : ''}
+        altButtonStyle={buttonStyles.confirm}
         onConfirm={() => clearData() + setOpenWarningModal(false)}
         warningMessage={warningMessage}
       />

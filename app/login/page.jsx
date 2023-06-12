@@ -87,7 +87,7 @@ export default function Login() {
           <div className='mt-2 text-white text-sm'>or</div>
           <div className='mt-2'>
             <ActionButton
-              className={buttonStyles.create}
+              className={buttonStyles.createAlternate}
               action={() => onGuestSubmit()}
               buttonTitle={'Continue as Guest'}
               type='submit'

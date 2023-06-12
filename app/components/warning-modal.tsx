@@ -6,15 +6,19 @@ export default function WarningModal({
   onCancel,
   onConfirm,
   warningMessage,
-  cancelText,
-  confirmText,
+  mainButtonText,
+  mainButtonStyle,
+  altButtonText,
+  altButtonStyle,
 }: {
   open: () => void;
   onCancel: () => void;
   onConfirm: () => void;
   warningMessage: string;
-  cancelText: string;
-  confirmText?: string;
+  mainButtonText: string;
+  mainButtonStyle: string;
+  altButtonText?: string;
+  altButtonStyle?: string;
 }) {
   if (!open) return null;
   return (
@@ -34,18 +38,18 @@ export default function WarningModal({
         <div className='flex justify-center gap-4 pb-4 select-none'>
         <div className=''>
           <ActionButton
-            className={confirmText? buttonStyles.cancel : buttonStyles.confirm}
+            className={mainButtonStyle}
             action={() => onCancel()}
-            buttonTitle={cancelText}
+            buttonTitle={mainButtonText}
           />
         </div>
 
-        {confirmText ? (
+        {altButtonText ? (
           <div className=''>
             <ActionButton
-              className={buttonStyles.confirm}
+              className={altButtonStyle}
               action={() => onConfirm()}
-              buttonTitle={confirmText}
+              buttonTitle={altButtonText}
             />
           </div>
         ) : null}

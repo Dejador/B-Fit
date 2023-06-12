@@ -34,12 +34,12 @@ export default function AddExercisesModal({
         }}
         className='max-w-[98%] md:max-w-[65%] w-full h-[77%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
       >
-        <div className='max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+        <div className={isOpen ? 'flex w-full h-[80%] max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-hidden' : 'max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto' }>
           {bodyPartList.map((bodyPart, index) => (
             <div
               key={index}
               className={
-                isOpen && selectedId !== index ? 'hidden' : 'flex-initial'
+                isOpen && selectedId !== index ? 'hidden' : 'flex-initial w-full'
               }
             >
               <div
@@ -68,7 +68,7 @@ export default function AddExercisesModal({
                   ref={inputRef}
                   className={
                     selectedId === index
-                      ? 'border-2 w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
+                      ? 'border-2 w-[80%] md:w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
                       : 'hidden'
                   }
                   type='search'
@@ -76,7 +76,7 @@ export default function AddExercisesModal({
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <div className='max-h-[425px] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+              <div className='max-h-[80%] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
                 {allExercises
                   .filter((exercise) =>
                     exercise.name
@@ -104,7 +104,7 @@ export default function AddExercisesModal({
                           >
                             <ActionButton
                               className={buttonStyles.create + ' w-[30px]'}
-                              action={() => onAddExercise(id)}
+                              action={() => onAddExercise(id, name)}
                               buttonTitle={'+'}
                             />
                           </div>
@@ -117,7 +117,7 @@ export default function AddExercisesModal({
                           >
                             <ActionButton
                               className={buttonStyles.remove + ' w-[30px]'}
-                              action={() => onRemoveExercise(id)}
+                              action={() => onRemoveExercise(id, name)}
                               buttonTitle={'-'}
                             />
                           </div>

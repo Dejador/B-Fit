@@ -54,8 +54,10 @@ export default function Routines() {
             ? () => setOpenWarningModal(false) + setIsDeleted(false)
             : () => setOpenWarningModal(false)
         }
-        cancelText={isDeleted ? 'Ok' : 'Cancel'}
-        confirmText={isDeleted ? '' : 'Yes, Delete'}
+        mainButtonText={isDeleted ? 'Continue' : 'Cancel'}
+        mainButtonStyle={isDeleted ? buttonStyles.confirm : buttonStyles.cancel}
+        altButtonText={isDeleted ? '' : 'Yes, Delete'}
+        altButtonStyle={buttonStyles.confirm}
         onConfirm={() => handleDeleteConfirmation()}
         warningMessage={
           isDeleted
@@ -63,14 +65,14 @@ export default function Routines() {
             : 'The selected routine will be deleted, continue?'
         }
       />
-      <div className='mt-8 md:mt-32 justify-center text-center align-middle flex'>
+      <div className='mt-24 md:mt-32 justify-center text-center align-middle flex fixed top-4 mx-auto w-full'>
         <LinkButton
           className={buttonStyles.create}
           route={'/routines/new'}
           buttonTitle={'+ Create New Routine'}
         />
       </div>
-      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-4 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b'>
+      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-24 md:mt-44 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b'>
         {routines &&
           !loading &&
           currentUser &&

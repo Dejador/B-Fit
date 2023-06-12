@@ -75,13 +75,13 @@ export default function ListExercises({ allExercises, bodyPart }) {
       <div>
         <input
           ref={inputRef}
-          className='border-2 w-[75%] md:w-[25%] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
+          className='border-2 w-[60%] md:w-[350px] mx-auto flex my-2 px-2 py-1 text-sm text-main-light placeholder:text-center outline-none focus:border-secondary-light-b'
           type='search'
           placeholder='Search'
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className='max-h-[450px] w-[350px] md:w-[675px] mx-auto mt-6 bg-secondary-a  select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+      <div className='max-h-[450px] w-[90%] md:w-[675px] mx-auto mt-6 bg-secondary-a  select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
         {allExercises
           .filter((exercise) =>
             exercise.name.toLowerCase().includes(searchTerm.toLowerCase())

@@ -16,6 +16,8 @@ export const buttonStyles = {
     'text-white bg-secondary-light hover:cursor-default border border-white px-2 py-1 text-sm opacity-70 rounded select-none',
   create:
     'text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none',
+  createAlternate:
+    'text-white bg-secondary-alt hover:bg-secondary-alt-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none',
   cancel:
     'text-alert hover:text-alert-b hover:cursor-pointer transition-colors select-none',
   add: 'text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors select-none',

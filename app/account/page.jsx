@@ -40,7 +40,7 @@ export default function Account() {
         )}
         {isGuest && (
           <div className='mt-2 text-white'>
-            Logged in as <span className='text-secondary-light-b'>Guest</span>
+            Logged in as <span className='text-secondary-alt'>Guest</span>
           </div>
         )}
         {!currentUser && (
