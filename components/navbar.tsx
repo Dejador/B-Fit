@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import LinkButton from './link-button';
-import { buttonStyles } from '../styles/button-styles';
 import { mainPages } from '../common/data';
 import Image from 'next/image';
-import { useAuth } from '../app/context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const { currentUser } = useAuth();
@@ -43,8 +42,8 @@ export default function Navbar() {
               <LinkButton
                 className={
                   pathName.includes(page.route)
-                    ? buttonStyles.navbarActiveButtonStyle
-                    : buttonStyles.navbarButtonStyle
+                    ? 'btn-navbar-active'
+                    : 'btn-navbar'
                 }
                 route={page.route}
                 buttonTitle={page.title}
@@ -54,8 +53,8 @@ export default function Navbar() {
           <LinkButton
             className={
               pathName.includes('login') || pathName.includes('register')
-                ? buttonStyles.navbarActiveButtonStyle
-                : buttonStyles.navbarButtonStyle
+                ? 'btn-navbar-active'
+                : 'btn-navbar'
             }
             route={currentUser === null ? '/login' : '/account'}
             buttonTitle={
@@ -99,14 +98,14 @@ export default function Navbar() {
               onClick={hideMenu}
             >
               <LinkButton
-                className={buttonStyles.mobileMenuButtonStyle}
+                className='btn-mobile-menu'
                 route={'/'}
                 buttonTitle={'Home'}
               />
             </div>
             <div className={'flex-col flex h-10'} onClick={hideMenu}>
               <LinkButton
-                className={buttonStyles.mobileMenuButtonStyle}
+                className='btn-mobile-menu'
                 route={currentUser === null ? '/login' : '/account'}
                 buttonTitle={
                   currentUser === null ? 'LogIn | Register' : 'My Account'
@@ -125,7 +124,7 @@ export default function Navbar() {
                 onClick={hideMenu}
               >
                 <LinkButton
-                  className={buttonStyles.mobileMenuButtonStyle}
+                  className='btn-mobile-menu'
                   route={page.route}
                   buttonTitle={page.title}
                 />

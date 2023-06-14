@@ -1,5 +1,4 @@
 import ActionButton from './action-button';
-import { buttonStyles } from '../styles/button-styles';
 
 export default function WarningModal({
   open,
@@ -36,7 +35,7 @@ export default function WarningModal({
           <p className='flex text-center items-center px-12 py-6'>{warningMessage}</p>
         </div>
         <div className='flex justify-center gap-4 pb-4 select-none'>
-        <div className=''>
+        <div>
           <ActionButton
             className={mainButtonStyle}
             action={() => onCancel()}
@@ -45,7 +44,7 @@ export default function WarningModal({
         </div>
 
         {altButtonText ? (
-          <div className=''>
+          <div>
             <ActionButton
               className={altButtonStyle}
               action={() => onConfirm()}

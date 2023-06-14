@@ -2,15 +2,14 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '@/app/utils/firebase';
+import { db } from '@/utils/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
-import { buttonStyles } from '@/styles/button-styles';
 import LinkButton from '@/components/link-button';
 import ActionButton from '@/components/action-button';
 import AddExercisesModal from '@/components/add-exercises-modal';
 import WarningModal from '@/components/warning-modal';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 
 export default function NewRoutine() {
   const router = useRouter();
@@ -136,27 +135,27 @@ export default function NewRoutine() {
         mainButtonText={!isDisabled && !error ? 'View Routines' : 'Ok'}
         mainButtonStyle={
           !isDisabled && !error
-            ? buttonStyles.confirmAlternate
-            : buttonStyles.confirm
+            ? 'btn-confirm-alternate'
+            : 'btn-confirm'
         }
         altButtonText={!isDisabled && !error ? 'Create New Routine' : ''}
-        altButtonStyle={buttonStyles.confirm}
+        altButtonStyle='btn-confirm'
         onConfirm={() => clearData() + setOpenWarningModal(false)}
         warningMessage={warningMessage}
       />
       <div className='flex-col text-center mt-8 md:mt-44'>
         {!currentUser && (
-          <div className='text-white text-center px-2 py-1 mb-4 w-[350px] border border-alert text-sm mx-auto'>
+          <div className='text-white text-center px-2 py-1 mb-4 w-[350px] border border-alert text-sm mx-auto flex justify-center'>
             Please<span>&nbsp;</span>
             <LinkButton
-              className={buttonStyles.add}
+              className='btn-add'
               route={'/login'}
               buttonTitle={'Login'}
             />
             <span>&nbsp;</span>
             or<span>&nbsp;</span>
             <LinkButton
-              className={buttonStyles.add}
+              className='btn-add'
               route={'/register'}
               buttonTitle={'Register'}
             />
@@ -174,7 +173,7 @@ export default function NewRoutine() {
         />
         <div className='mb-3 select-none'>
           <ActionButton
-            className={buttonStyles.add}
+            className='btn-add'
             action={() => setOpenModal(true)}
             buttonTitle={'+ Add Exercise(s)'}
           />
@@ -188,7 +187,7 @@ export default function NewRoutine() {
                     </p>
                     <div className='text-end mr-2 absolute right-0'>
                       <ActionButton
-                        className={buttonStyles.remove + ' w-[30px]'}
+                        className={'btn-remove w-[30px]'}
                         action={() => onRemoveExercise(id)}
                         buttonTitle={'-'}
                       />
@@ -201,7 +200,7 @@ export default function NewRoutine() {
         <div className='mt-3'>
           <div className='flex justify-center'></div>
           <ActionButton
-            className={isDisabled ? buttonStyles.disabled : buttonStyles.create}
+            className={isDisabled ? 'btn-disabled' : 'btn-create'}
             action={
               isDisabled
                 ? () => setOpenWarningModal(true)
@@ -212,7 +211,7 @@ export default function NewRoutine() {
         </div>
         <div className='mt-6'>
           <LinkButton
-            className={buttonStyles.cancel}
+            className='btn-cancel'
             route={'/routines'}
             buttonTitle={'Cancel'}
           />

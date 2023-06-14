@@ -2,10 +2,9 @@
 
 import LinkButton from '../../components/link-button';
 import ActionButton from '../../components/action-button';
-import { buttonStyles } from '../../styles/button-styles';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Login() {
   const router = useRouter();
@@ -13,8 +12,6 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
-  console.log(currentUser);
 
   const handleKeypress = (e) => {
     if (e.keyCode === 13) {
@@ -76,7 +73,7 @@ export default function Login() {
             />
             <div className='mt-2'>
               <ActionButton
-                className={buttonStyles.create}
+                className='btn-create'
                 action={() => onSubmit()}
                 buttonTitle={'Submit'}
                 type='submit'
@@ -85,7 +82,7 @@ export default function Login() {
             <div className='text-white mt-7 text-sm min-w-[50%] md:min-w-[20%] border-t border-white text-center pt-3'>
               Already have an account? <span> </span>
               <LinkButton
-                className={buttonStyles.add}
+                className='btn-add'
                 route={'/login'}
                 buttonTitle={'Log In'}
               />

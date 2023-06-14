@@ -3,11 +3,10 @@
 import { useEffect, useState } from 'react';
 import RoutineCard from '../../components/routine-card';
 import LinkButton from '../../components/link-button';
-import { buttonStyles } from '../../styles/button-styles';
-import useFetchRoutines from '../hooks/fetchRoutines';
-import { useAuth } from '../context/AuthContext';
+import useFetchRoutines from '../../hooks/fetchRoutines'
+import { useAuth } from '../../context/AuthContext';
 import { doc, setDoc, deleteField } from 'firebase/firestore';
-import { db } from '../utils/firebase';
+import { db } from '../../utils/firebase';
 import WarningModal from '../../components/warning-modal';
 
 export default function Routines() {
@@ -54,7 +53,7 @@ export default function Routines() {
     
     return (
       <>
-      {<div className={loading ? ' text-secondary-alt-b  animate-pulse text-2xl flex min-h-[100vh] items-center justify-center flex-col' : 'hidden'}>Loading...</div>}
+      {<div className={loading ? 'flex min-h-[100vh] items-center justify-center flex-col' : 'hidden'}><div className={loading ? 'loading' : 'hidden'}></div></div>}
       <WarningModal
         open={openWarningModal}
         onCancel={
@@ -63,9 +62,9 @@ export default function Routines() {
             : () => setOpenWarningModal(false)
         }
         mainButtonText={isDeleted ? 'Continue' : 'Cancel'}
-        mainButtonStyle={isDeleted ? buttonStyles.confirm : buttonStyles.cancel}
+        mainButtonStyle={isDeleted ? 'btn-confirm' : 'btn-cancel'}
         altButtonText={isDeleted ? '' : 'Yes, Delete'}
-        altButtonStyle={buttonStyles.confirm}
+        altButtonStyle='btn-confirm'
         onConfirm={() => handleDeleteConfirmation()}
         warningMessage={
           isDeleted
@@ -75,7 +74,7 @@ export default function Routines() {
       />
       <div className='mt-24 md:mt-32 justify-center text-center align-middle flex fixed top-4 mx-auto w-full'>
         <LinkButton
-          className={buttonStyles.create}
+          className='btn-create'
           route={'/routines/new'}
           buttonTitle={'+ Create New Routine'}
         />

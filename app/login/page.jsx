@@ -2,10 +2,9 @@
 
 import LinkButton from '../../components/link-button';
 import ActionButton from '../../components/action-button';
-import { buttonStyles } from '../../styles/button-styles';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Login() {
   const router = useRouter();
@@ -78,7 +77,7 @@ export default function Login() {
           />
           <div className='mt-2'>
             <ActionButton
-              className={buttonStyles.create}
+              className='btn-create'
               action={() => onSubmit()}
               buttonTitle={'Submit'}
               type='submit'
@@ -87,7 +86,7 @@ export default function Login() {
           <div className='mt-2 text-white text-sm'>or</div>
           <div className='mt-2'>
             <ActionButton
-              className={buttonStyles.createAlternate}
+              className='btn-create-alternate'
               action={() => onGuestSubmit()}
               buttonTitle={'Continue as Guest'}
               type='submit'
@@ -96,7 +95,7 @@ export default function Login() {
           <div className='text-white mt-7 text-sm border-t border-white text-center pt-3'>
             Need an account? <span> </span>
             <LinkButton
-              className={buttonStyles.add}
+              className='btn-add'
               route={'/register'}
               buttonTitle={'Register'}
             />

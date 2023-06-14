@@ -2,8 +2,7 @@
 
 import ActionButton from '../../components/action-button';
 import LinkButton from '../../components/link-button';
-import { buttonStyles } from '../../styles/button-styles';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -47,7 +46,7 @@ export default function Account() {
           <div className='mt-2 text-white flex'>
             Please<span>&nbsp;</span>
             <LinkButton
-              className={buttonStyles.add}
+              className='btn-add'
               route={'/login'}
               buttonTitle={'Log In'}
             /><span>&nbsp;</span>
@@ -57,7 +56,7 @@ export default function Account() {
         {currentUser && (
           <div className='mt-2'>
             <ActionButton
-              className={buttonStyles.delete}
+              className='btn-delete'
               action={() => onSubmit()}
               buttonTitle={'Logout'}
               type='submit'

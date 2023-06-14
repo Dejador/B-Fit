@@ -1,13 +1,9 @@
 'use client';
 
 import ActionButton from './action-button';
-import { buttonStyles } from '../styles/button-styles';
-import { useAuth } from '../app/context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
 
-function handleEdit() {
-  alert("Sorry, can't do that yet!");
-}
 
 export default function RoutineCard({
   routineTitle,
@@ -17,6 +13,10 @@ export default function RoutineCard({
 }) {
   const { currentUser } = useAuth();
   const router = useRouter();
+  
+  function handleEdit(routineId) {
+    router.push('routines/edit')
+  }
 
   return (
     <>
@@ -27,15 +27,15 @@ export default function RoutineCard({
               {routineTitle}
             </div>
           </div>
-          <div className='w-[325px] md:w-[400px] flex justify-end pr-4 bg-secondary-a border py-1'>
-            {/* <ActionButton
-              className={buttonStyles.edit}
+          <div className='w-[325px] md:w-[400px] flex justify-evenly bg-secondary-a border py-1'>
+            <ActionButton
+              className='btn-edit'
               action={() => handleEdit(routineId)}
               buttonTitle={'✎ Edit'}
             />
-            <span className='border-r'></span> */}
+            <span className='border-r'></span>
             <ActionButton
-              className={buttonStyles.delete}
+              className='btn-delete'
               action={() => handleDelete(routineId)}
               buttonTitle={'X Delete'}
             />

@@ -2,15 +2,13 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '@/app/utils/firebase';
+import { db } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
-import { buttonStyles } from '@/styles/button-styles';
 import LinkButton from '@/components/link-button';
 import ActionButton from '@/components/action-button';
-import AddExercisesModal from '@/app/components/add-exercises-modal';
+import AddExercisesModal from '@/components/add-exercises-modal';
 import WarningModal from '@/components/warning-modal';
-import allExercises from '../../../public/assets/files/allExercises.json';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 
 export default function EditRoutine() {
   const router = useRouter();
@@ -140,13 +138,13 @@ export default function EditRoutine() {
           <div className='text-white text-center px-2 py-1 mb-4 w-[350px] border border-alert text-sm mx-auto'>
             Please{' '}
             <LinkButton
-              className={buttonStyles.add}
+              className='btn-add'
               route={'/login'}
               buttonTitle={'Login'}
             />{' '}
             or{' '}
             <LinkButton
-              className={buttonStyles.add}
+              className='btn-add'
               route={'/register'}
               buttonTitle={'Register'}
             />{' '}
@@ -163,7 +161,7 @@ export default function EditRoutine() {
         />
         <div className='mb-3 select-none'>
           <ActionButton
-            className={buttonStyles.add}
+            className='btn-add'
             action={() => setOpenModal(true)}
             buttonTitle={'+ Add Exercise(s)'}
           />
@@ -180,7 +178,7 @@ export default function EditRoutine() {
                     </p>
                     <div className='text-end mr-2 absolute right-0'>
                       <ActionButton
-                        className={buttonStyles.remove + ' w-[30px]'}
+                        className={'btn-remove w-[30px]'}
                         action={() => onRemoveExercise(id)}
                         buttonTitle={'-'}
                       />
@@ -193,7 +191,7 @@ export default function EditRoutine() {
         <div className='mt-3'>
           <div className='flex justify-center'></div>
           <ActionButton
-            className={isDisabled ? buttonStyles.disabled : buttonStyles.create}
+            className={isDisabled ? 'btn-disabled' : 'btn-create'}
             action={
               isDisabled
                 ? () => setOpenWarningModal(true)
@@ -204,7 +202,7 @@ export default function EditRoutine() {
         </div>
         <div className='mt-6'>
           <LinkButton
-            className={buttonStyles.cancel}
+            className='btn-cancel'
             route={'/routines'}
             buttonTitle={'Cancel'}
           />

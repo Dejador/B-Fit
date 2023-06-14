@@ -1,8 +1,6 @@
 'use client';
 
 import Dropdown from '../../components/dropdown';
-import { useEffect, useState } from 'react';
-import bodyPartsList from '../../public/assets/files/bodyPartList.json'
 
 export default function ExerciseCategory()  {
   // const [bodyPartsList, setBodyPartsList] = useState([]);
@@ -33,7 +31,7 @@ export default function ExerciseCategory()  {
     <>
         <div className='text-center mt-8 md:mt-32 fixed mx-auto w-full'>
         {/* <div className='text-center mt-0 mx-auto w-full overflow-auto pt-24'> */}
-        <Dropdown dropdownTitle={'Muscle Group'} dropdownItems={bodyPartsList} />
+        <Dropdown dropdownTitle={'Muscle Group'} />
       </div>
     </>
   );

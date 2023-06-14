@@ -1,8 +1,7 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import ActionButton from './action-button';
-import allExercises from '../public/assets/files/allExercises.json';
-import bodyPartList from '../public/assets/files/bodyPartList.json';
-import { buttonStyles } from '../styles/button-styles';
+import useFetchExercises from '../hooks/fetchExercises'
+// import allExercises from '../public/assets/files/allExercises.json';
 
 export default function AddExercisesModal({
   open,
@@ -14,7 +13,10 @@ export default function AddExercisesModal({
   const [selectedId, setSelectedId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const { bodyPartList, allBodyExercises, loading, error, getBodyPartList, getAllBodyExercises } = useFetchExercises();
   const inputRef = useRef(null);
+
+  getAllBodyExercises()
 
   function clearSearch() {
     setSearchTerm('');
@@ -77,7 +79,7 @@ export default function AddExercisesModal({
                 />
               </div>
               <div className='max-h-[80%] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
-                {allExercises
+                {allBodyExercises
                   .filter((exercise) =>
                     exercise.name
                       .toLowerCase()
@@ -103,7 +105,7 @@ export default function AddExercisesModal({
                             }
                           >
                             <ActionButton
-                              className={buttonStyles.create + ' w-[30px]'}
+                              className={'btn-create w-[30px]'}
                               action={() => onAddExercise(id, name)}
                               buttonTitle={'+'}
                             />
@@ -116,7 +118,7 @@ export default function AddExercisesModal({
                             }
                           >
                             <ActionButton
-                              className={buttonStyles.remove + ' w-[30px]'}
+                              className={'btn-remove w-[30px]'}
                               action={() => onRemoveExercise(id, name)}
                               buttonTitle={'-'}
                             />
@@ -132,7 +134,7 @@ export default function AddExercisesModal({
 
         <div className='flex fixed left-1/2 -translate-x-1/2 bottom-4'>
           <ActionButton
-            className={buttonStyles.create}
+            className='btn-create'
             action={() => {!isOpen ? onClose() + clearSearch() : clearSearch() }}
             buttonTitle={isOpen ? 'Back' : 'Done'}
           />

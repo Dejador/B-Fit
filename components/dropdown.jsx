@@ -1,26 +1,32 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import ListExercises from './list-exercises';
-import bodyPartList from '../public/assets/files/bodyPartList.json'
-import allExercises from '../public/assets/files/allExercises.json'
+import useFetchExercises from '../hooks/fetchExercises'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Dropdown({ dropdownTitle, dropdownItems }) {
+export default function Dropdown({ dropdownTitle }) {
+  const { bodyPartList, allBodyExercises, loading, error, getBodyPartList, getAllBodyExercises } = useFetchExercises();
   const [selectedName, setSelelectedName] = useState('back');
   const [bodyPartIndex, setBodyPartIndex] = useState(0);
   function onDropdownItemClick(bodyPart, index) {
     setSelelectedName(bodyPart);
-    setBodyPartIndex(index)
+    setBodyPartIndex(index);
     return selectedName;
   }
+
+  getAllBodyExercises()
 
   const headersInfo = {
     'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPID_API_KEY,
     'X-RapidAPI-Host': process.env.NEXT_PUBLIC_RAPID_HOST,
   };
+
+  // useEffect(() => {
+  //   setBodyPartList([...new Set(allExercises.map(({ bodyPart }) => bodyPart))].sort());
+  // }, []);
 
   // LOAD FROM API
   // useEffect(() => {
@@ -42,14 +48,14 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
   //   getBodyPartsExercises();
   // }, [selectedName]);
 
-// LOAD LOCALLY (NOT WORKING)
+  // LOAD LOCALLY (NOT WORKING)
   // useEffect(() => {
   //   let data = selectedName.toLowerCase().replace(/\s/g, '_')+'.json';
-    
+
   //   function getBodyPartsExercises() {
   //     fetch(data
   //   ,{
-  //     headers : { 
+  //     headers : {
   //       'Content-Type': 'application/json',
   //       'Accept': 'application/json'
   //      }
@@ -85,13 +91,12 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
         >
           <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-40 md:w-52 ml-6 md:ml-10 text-sm md:text-base origin-top-right bg-white'>
             <div>
-              {/* {dropdownItems.map((bodyPart, index) => ( */}
-              {bodyPartList.map((bodyPart, index) => (
-                <Menu.Item key={index}>
+              {bodyPartList && bodyPartList.map((bodyPart, id) => (
+                <Menu.Item key={id}>
                   {({ active }) => (
                     <a
                       onClick={() => {
-                        onDropdownItemClick(bodyPart, index);
+                        onDropdownItemClick(bodyPart, id);
                       }}
                       href='#'
                       className={classNames(
@@ -113,7 +118,12 @@ export default function Dropdown({ dropdownTitle, dropdownItems }) {
       <div className='uppercase text-white text-sm md:text-lg mt-8 select-none'>
         {selectedName}
       </div>
-      <ListExercises allExercises={allExercises} bodyPart={selectedName} bodyPartIndex={bodyPartIndex} />
+      {allBodyExercises &&
+      <ListExercises
+        allExercises={allBodyExercises}
+        bodyPart={selectedName}
+        bodyPartIndex={bodyPartIndex}
+      />}
     </>
   );
 }
