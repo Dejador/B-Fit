@@ -2,10 +2,7 @@
 
 import ActionButton from './action-button';
 import { buttonStyles } from '../styles/button-styles';
-import allExercises from '../../public/assets/files/allExercises.json';
-import { doc, setDoc, deleteField } from 'firebase/firestore';
-import { db } from '../utils/firebase';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../app/context/AuthContext';
 import { useRouter } from 'next/navigation';
 
 function handleEdit() {
@@ -16,31 +13,10 @@ export default function RoutineCard({
   routineTitle,
   routineExercises,
   routineId,
-  routineCreationDate,
   handleDelete
 }) {
   const { currentUser } = useAuth();
   const router = useRouter();
-
-  // async function handleDelete(routineId) {
-  //   const userRef = doc(db, 'users', currentUser.uid);
-  //   const key = routineId;
-  //   try {
-  //     await setDoc(
-  //       userRef,
-  //       {
-  //         routines: {
-  //           [key]: deleteField(),
-  //         },
-  //       },
-  //       { merge: true }
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   console.log('here')
-  //   router.refresh()
-  // }
 
   return (
     <>
@@ -65,17 +41,14 @@ export default function RoutineCard({
             />
           </div>
           <div className='h-[154px] overflow-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b pr-[2px]'>
-            {routineExercises.map((index) =>
-              allExercises
-                .filter((exercise) => exercise.id === index)
-                .map(({ name, id }) => (
+            {routineExercises.map(({ name, id }) => (
                   <div className='flex bg-main-dark-b' key={id}>
                     <div className='w-[325px] md:w-[400px] border-white border-b border-r border-l  py-1 px-2 capitalize'>
                       {name}
                     </div>
                   </div>
                 ))
-            )}
+            }
           </div>
         </div>
       </div>

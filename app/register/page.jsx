@@ -1,8 +1,8 @@
 'use client';
 
-import LinkButton from '../components/link-button';
-import ActionButton from '../components/action-button';
-import { buttonStyles } from '../styles/button-styles';
+import LinkButton from '../../components/link-button';
+import ActionButton from '../../components/action-button';
+import { buttonStyles } from '../../styles/button-styles';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';

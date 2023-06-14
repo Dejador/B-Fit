@@ -1,15 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import RoutineCard from '../components/routine-card';
-import LinkButton from '../components/link-button';
-import { buttonStyles } from '../styles/button-styles';
+import RoutineCard from '../../components/routine-card';
+import LinkButton from '../../components/link-button';
+import { buttonStyles } from '../../styles/button-styles';
 import useFetchRoutines from '../hooks/fetchRoutines';
 import { useAuth } from '../context/AuthContext';
 import { doc, setDoc, deleteField } from 'firebase/firestore';
 import { db } from '../utils/firebase';
-import { useRouter } from 'next/navigation';
-import WarningModal from '../components/warning-modal';
+import WarningModal from '../../components/warning-modal';
 
 export default function Routines() {
   const { routines, loading, error, getData } = useFetchRoutines();
@@ -17,7 +16,15 @@ export default function Routines() {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [deleteRoutineId, setDeleteRoutineId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
-  const router = useRouter();
+  const [routinesData, setRoutinesData] = useState([]);
+
+  useEffect(() => {
+    if (routines) {
+      setRoutinesData(
+        Object.keys(routines).map((routine) => routines[routine])
+      );
+    }
+  }, [routines]);
 
   getData(isDeleted);
 
@@ -38,15 +45,16 @@ export default function Routines() {
           },
         },
         { merge: true }
-      );
-    } catch (err) {
-      console.log(err);
+        );
+      } catch (err) {
+        console.log(err);
+      }
+      setIsDeleted(true);
     }
-    setIsDeleted(true);
-  }
-
-  return (
-    <>
+    
+    return (
+      <>
+      {<div className={loading ? ' text-secondary-alt-b  animate-pulse text-2xl flex min-h-[100vh] items-center justify-center flex-col' : 'hidden'}>Loading...</div>}
       <WarningModal
         open={openWarningModal}
         onCancel={
@@ -76,17 +84,28 @@ export default function Routines() {
         {routines &&
           !loading &&
           currentUser &&
-          Object.keys(routines).map((routine) => (
-            <div key={routines[routine].routineId}>
-              <RoutineCard
-                routineTitle={routines[routine].routineName}
-                routineExercises={routines[routine].routineExercises}
-                routineId={routines[routine].routineId}
-                routineCreationDate={routines[routine].routineCreationDate}
-                handleDelete={handleDelete}
-              />
-            </div>
-          ))}
+          routinesData
+            .sort((a, b) =>
+              a.routineCreationDate < b.routineCreationDate ? 1 : -1
+            )
+            .map(
+              ({
+                routineId,
+                routineName,
+                routineExercises,
+                routineCreationDate,
+              }) => (
+                <div key={routineId}>
+                  <RoutineCard
+                    routineTitle={routineName}
+                    routineExercises={routineExercises}
+                    routineId={routineId}
+                    routineCreationDate={routineCreationDate}
+                    handleDelete={handleDelete}
+                  />
+                </div>
+              )
+            )}
       </div>
     </>
   );

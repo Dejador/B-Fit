@@ -1,6 +1,6 @@
 'use client';
 
-import Dropdown from '../components/dropdown';
+import Dropdown from '../../components/dropdown';
 import { useEffect, useState } from 'react';
 import bodyPartsList from '../../public/assets/files/bodyPartList.json'
 

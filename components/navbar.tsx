@@ -6,7 +6,7 @@ import LinkButton from './link-button';
 import { buttonStyles } from '../styles/button-styles';
 import { mainPages } from '../common/data';
 import Image from 'next/image';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../app/context/AuthContext';
 
 export default function Navbar() {
   const { currentUser } = useAuth();

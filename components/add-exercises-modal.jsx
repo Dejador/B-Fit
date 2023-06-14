@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import ActionButton from './action-button';
-import allExercises from '../../public/assets/files/allExercises.json';
-import bodyPartList from '../../public/assets/files/bodyPartList.json';
-import { buttonStyles } from '../../styles/button-styles';
+import allExercises from '../public/assets/files/allExercises.json';
+import bodyPartList from '../public/assets/files/bodyPartList.json';
+import { buttonStyles } from '../styles/button-styles';
 
 export default function AddExercisesModal({
   open,

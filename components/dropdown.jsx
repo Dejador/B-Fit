@@ -1,8 +1,8 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import ListExercises from './list-exercises';
-import bodyPartList from '../../public/assets/files/bodyPartList.json'
-import allExercises from '../../public/assets/files/allExercises.json'
+import bodyPartList from '../public/assets/files/bodyPartList.json'
+import allExercises from '../public/assets/files/allExercises.json'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');

@@ -5,12 +5,11 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/app/utils/firebase';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
-import { buttonStyles } from '@/app/styles/button-styles';
-import LinkButton from '@/app/components/link-button';
-import ActionButton from '@/app/components/action-button';
-import AddExercisesModal from '@/app/components/add-exercises-modal';
-import WarningModal from '@/app/components/warning-modal';
-import allExercises from '../../../public/assets/files/allExercises.json';
+import { buttonStyles } from '@/styles/button-styles';
+import LinkButton from '@/components/link-button';
+import ActionButton from '@/components/action-button';
+import AddExercisesModal from '@/components/add-exercises-modal';
+import WarningModal from '@/components/warning-modal';
 import { useAuth } from '../../context/AuthContext';
 
 export default function NewRoutine() {
@@ -47,13 +46,15 @@ export default function NewRoutine() {
     }
   }, [routineName, selectedExerciseIds, isSavedToDb]);
 
-  function onAddExercise(id) {
-    setSelectedExerciseIds([...selectedExerciseIds, id]);
+  function onAddExercise(id, name) {
+    setSelectedExerciseIds([...selectedExerciseIds, {id, name}]);
   }
   function onRemoveExercise(id) {
-    const newExcerciseIds = [...selectedExerciseIds].filter(
-      (setId) => setId !== id
-    );
+    const index = selectedExerciseIds.findIndex(exercise => exercise.id === id)
+    const newExcerciseIds = [
+      ...selectedExerciseIds.slice(0, index),
+      ...selectedExerciseIds.slice(index + 1),
+    ]
     setSelectedExerciseIds(newExcerciseIds);
   }
 
@@ -133,8 +134,12 @@ export default function NewRoutine() {
             : () => setOpenWarningModal(false)
         }
         mainButtonText={!isDisabled && !error ? 'View Routines' : 'Ok'}
-        mainButtonStyle={!isDisabled && !error ? buttonStyles.confirmAlternate : buttonStyles.confirm}
-        altButtonText={!isDisabled && !error ? 'Add More' : ''}
+        mainButtonStyle={
+          !isDisabled && !error
+            ? buttonStyles.confirmAlternate
+            : buttonStyles.confirm
+        }
+        altButtonText={!isDisabled && !error ? 'Create New Routine' : ''}
         altButtonStyle={buttonStyles.confirm}
         onConfirm={() => clearData() + setOpenWarningModal(false)}
         warningMessage={warningMessage}
@@ -147,13 +152,15 @@ export default function NewRoutine() {
               className={buttonStyles.add}
               route={'/login'}
               buttonTitle={'Login'}
-            /><span>&nbsp;</span>
+            />
+            <span>&nbsp;</span>
             or<span>&nbsp;</span>
             <LinkButton
               className={buttonStyles.add}
               route={'/register'}
               buttonTitle={'Register'}
-            /><span>&nbsp;</span>
+            />
+            <span>&nbsp;</span>
             to continue
           </div>
         )}
@@ -173,10 +180,7 @@ export default function NewRoutine() {
           />
         </div>
         <div className='max-w-[90%]  md:max-w-[50%] max-h-[355px] pr-1 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b overflow-auto m-auto my-3 select-none'>
-          {selectedExerciseIds.map((index) =>
-            allExercises
-              .filter((exercise) => exercise.id === index)
-              .map(({ equipment, name, target, gifUrl, id, bodyPart }) => (
+          {selectedExerciseIds.map(({ name, id}) => (
                 <div key={id}>
                   <div className='relative flex items-center border-y bg-main-light py-6 hover:bg-opacity-50'>
                     <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
@@ -192,7 +196,7 @@ export default function NewRoutine() {
                   </div>
                 </div>
               ))
-          )}
+          }
         </div>
         <div className='mt-3'>
           <div className='flex justify-center'></div>

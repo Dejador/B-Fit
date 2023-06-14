@@ -2,7 +2,7 @@ export const mainPages = [
     {
       route: '/exercises',
       title: 'Exercises',
-      description: 'Browse throught the details of hundreds of exercises'
+      description: 'Browse through the details of hundreds of exercises'
     },
     {
       route: '/routines',
@@ -12,6 +12,6 @@ export const mainPages = [
     {
       route: '/weekly',
       title: 'Weekly Plan',
-      description: 'Track and manage your weekly progress'
+      description: 'Track and manage your weekly progress (Coming Soon!)'
     },
   ];

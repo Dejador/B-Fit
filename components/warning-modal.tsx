@@ -1,5 +1,5 @@
 import ActionButton from './action-button';
-import { buttonStyles } from '../../styles/button-styles';
+import { buttonStyles } from '../styles/button-styles';
 
 export default function WarningModal({
   open,

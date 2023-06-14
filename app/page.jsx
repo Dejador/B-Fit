@@ -1,7 +1,7 @@
 'use client';
 
-import LinkButton from './components/link-button';
-import { mainPages } from './common/data';
+import LinkButton from '../components/link-button';
+import { mainPages } from '../common/data';
 export default function Home() {
 
   const buttonStyle =
