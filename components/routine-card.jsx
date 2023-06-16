@@ -15,7 +15,7 @@ export default function RoutineCard({
   const router = useRouter();
   
   function handleEdit(routineId) {
-    router.push('routines/edit')
+    router.push('routines/edit/' + routineId)
   }
 
   return (
