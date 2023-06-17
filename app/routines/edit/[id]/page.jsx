@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 import LinkButton from '@/components/link-button';
@@ -18,6 +18,7 @@ export default function EditRoutine({ params }) {
   const [openModal, setOpenModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [selectedExerciseIds, setSelectedExerciseIds] = useState([]);
+  const [equalSelectedExercises , setEqualSelectedExercises] = useState(true)
   const [initialExerciseIds, setInitialExerciseIds] = useState([]);
   const [initialRoutineData, setInitialRoutineData] = useState(null);
   const [initialRoutineName, setInitialRoutineName] = useState('');
@@ -75,11 +76,16 @@ export default function EditRoutine({ params }) {
   useEffect(() => {
     if (isSavedToDb) {
       setWarningMessage('Routine updated succesfully');
-    } else if (!isSavedToDb && error) {
+    } else if (error) {
       setWarningMessage(
         'An error ocurred while updating your routine, please try again'
       );
-    } else if (selectedExerciseIds.length === 0 && routineName === '') {
+    } else if (routineName === initialRoutineName && ((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index]))) {
+      setWarningMessage(
+        'There are no changes yet'
+      );
+    }
+    else if (selectedExerciseIds.length === 0 && routineName === '') {
       setWarningMessage(
         'Please enter a Routine Name and Add Exercises to continue'
       );
@@ -105,18 +111,17 @@ export default function EditRoutine({ params }) {
     ];
     setSelectedExerciseIds(newExcerciseIds);
   }
-  useEffect(() => {
-    console.log('new', selectedExerciseIds);
-    console.log('ini', initialExerciseIds);
-  }, [selectedExerciseIds]);
-
+  
   function handleIsDisabled() {
-    if (routineName.length && selectedExerciseIds.length && currentUser) {
+    if (routineName.length && selectedExerciseIds.length && routineName !== initialRoutineName ||
+      routineName.length && selectedExerciseIds.length && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index])) ||
+      routineName.length && selectedExerciseIds.length && routineName !== initialRoutineName && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index]))) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
   }
+
 
   function clearData() {
     setRoutineName('');
@@ -134,6 +139,8 @@ export default function EditRoutine({ params }) {
   function handleOnUpdateRoutine() {
     const routineExercises = selectedExerciseIds;
     setUpdatedRoutine({
+      category: 'Routine',
+      routineId: params.id,
       routineName,
       routineExercises,
       routineCreationDate: new Date().getTime(),
@@ -141,10 +148,11 @@ export default function EditRoutine({ params }) {
   }
 
   useEffect(() => {
-    async function updateDB() {
+    async function saveToDB() {
       const userRef = doc(db, 'users', currentUser.uid);
+      const key = params.id;
       try {
-        await updateDoc(
+        await setDoc(
           userRef,
           {
             routines: {
@@ -159,9 +167,10 @@ export default function EditRoutine({ params }) {
       }
       setOpenWarningModal(true);
     }
-    if (routineName !== initialRoutineName) {
-      updateDB();
+    if (updatedRoutine.category !== 'Routine') {
+      return;
     }
+    saveToDB();
   }, [updatedRoutine]);
 
   return (
@@ -194,13 +203,10 @@ export default function EditRoutine({ params }) {
             ? () => router.push('/routines')
             : () => setOpenWarningModal(false)
         }
-        mainButtonText={!isDisabled && !error ? 'View Routines' : 'Ok'}
+        mainButtonText={!isDisabled && !error ? 'Back to Routines' : 'Ok'}
         mainButtonStyle={
           !isDisabled && !error ? 'btn-confirm-alternate' : 'btn-confirm'
         }
-        altButtonText={!isDisabled && !error ? 'Create New Routine' : ''}
-        altButtonStyle='btn-confirm'
-        onConfirm={() => clearData() + setOpenWarningModal(false)}
         warningMessage={warningMessage}
       />
       {!loadingInitialRoutineData && (

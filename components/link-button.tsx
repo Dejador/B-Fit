@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function LinkButton({
   route,
@@ -8,6 +7,7 @@ export default function LinkButton({
   className,
   descriptionStyle,
   Image,
+  type = 'button',
 }: {
   route: string;
   buttonTitle: string;
@@ -15,9 +15,10 @@ export default function LinkButton({
   descriptionStyle?: string;
   className?: string;
   Image?: string;
+  type?: 'button' | 'submit'
 }) {
   return (
-    <Link className={className} href={route}>
+    <Link className={className} href={route} type={type}>
       <div>{buttonTitle}</div>{' '}
       <div className={descriptionStyle}>{buttonDescription}</div>
     </Link>
