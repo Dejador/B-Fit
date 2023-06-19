@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 import LinkButton from '@/components/link-button';
@@ -172,7 +172,7 @@ export default function EditRoutine({ params }) {
     }
     saveToDB();
   }, [updatedRoutine]);
-
+  
   return (
     <>
       {
