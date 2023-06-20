@@ -1,4 +1,6 @@
-import { Fragment, useState, useEffect } from 'react';
+'use client'
+
+import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import ListExercises from './list-exercises';
 import useFetchExercises from '../hooks/fetchExercises';
@@ -12,8 +14,6 @@ export default function Dropdown({ dropdownTitle }) {
     bodyPartList,
     allBodyExercises,
     loading,
-    error,
-    getBodyPartList,
     getAllBodyExercises,
   } = useFetchExercises();
   const [selectedName, setSelelectedName] = useState('back');
