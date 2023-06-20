@@ -37,12 +37,12 @@ export default function Login() {
   async function onGuestSubmit() {
     try {
       await login(
-        process.env.GUEST_EMAIL,
-        process.env.GUEST_PASSWORD
+        process.env.NEXT_PUBLIC_GUEST_EMAIL,
+        process.env.NEXT_PUBLIC_GUEST_PASSWORD
       );
       router.back();
     } catch (err) {
-      setError('An error occurred, pleas try again later');
+      setError('An error occurred, please try again later');
     }
     return;
   }
