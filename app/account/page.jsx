@@ -21,7 +21,7 @@ export default function Account() {
   useEffect(() => {
     if (
       currentUser &&
-      currentUser.email === process.env.NEXT_PUBLIC_GUEST_EMAIL
+      currentUser.email === process.env.GUEST_EMAIL
     ) {
       setIsGuest(true);
     }

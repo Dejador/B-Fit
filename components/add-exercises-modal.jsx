@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import ActionButton from './action-button';
 import useFetchExercises from '../hooks/fetchExercises'
-// import allExercises from '../public/assets/files/allExercises.json';
 
 export default function AddExercisesModal({
   open,

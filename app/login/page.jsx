@@ -37,8 +37,8 @@ export default function Login() {
   async function onGuestSubmit() {
     try {
       await login(
-        process.env.NEXT_PUBLIC_GUEST_EMAIL,
-        process.env.NEXT_PUBLIC_GUEST_PASSWORD
+        process.env.GUEST_EMAIL,
+        process.env.GUEST_PASSWORD
       );
       router.back();
     } catch (err) {
