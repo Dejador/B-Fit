@@ -44,7 +44,7 @@ export default function ListExercises({ allExercises, bodyPart }) {
         />
       </div>
       <div className='max-h-[450px] w-[90%] md:w-[675px] mx-auto mt-6 bg-secondary-a  select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
-        {allExercises
+        {allExercises && allExercises
           .filter((exercise) =>
             exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
           )
