@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import RoutineCard from '../../components/routine-card';
 import LinkButton from '../../components/link-button';
-import useFetchRoutines from '../../hooks/fetchRoutines'
+import useFetchRoutines from '../../hooks/fetchRoutines';
 import { useAuth } from '../../context/AuthContext';
 import { doc, setDoc, deleteField } from 'firebase/firestore';
 import { db } from '../../utils/firebase';
@@ -44,16 +44,26 @@ export default function Routines() {
           },
         },
         { merge: true }
-        );
-      } catch (err) {
-        console.log(err);
-      }
-      setIsDeleted(true);
+      );
+    } catch (err) {
+      console.log(err);
     }
-    
-    return (
-      <>
-      {<div className={loading ? 'flex min-h-[100vh] items-center justify-center flex-col' : 'hidden'}><div className={loading ? 'loading' : 'hidden'}></div></div>}
+    setIsDeleted(true);
+  }
+
+  return (
+    <>
+      {
+        <div
+          className={
+            loading
+              ? 'flex min-h-[100vh] items-center justify-center flex-col'
+              : 'hidden'
+          }
+        >
+          <div className={loading ? 'loading' : 'hidden'}></div>
+        </div>
+      }
       <WarningModal
         open={openWarningModal}
         onCancel={

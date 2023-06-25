@@ -57,10 +57,6 @@ export default function NewRoutine() {
     setSelectedExerciseIds(newExcerciseIds);
   }
 
-  useEffect(() => {
-    console.log(selectedExerciseIds)
-  }, [selectedExerciseIds])
-
   function handleIsDisabled() {
     if (routineName.length && selectedExerciseIds.length && currentUser) {
       setIsDisabled(false);
