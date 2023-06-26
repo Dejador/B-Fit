@@ -103,7 +103,7 @@ export default function ListExercises({ allExercises, bodyPart }) {
                   <img
                     className='mb-6 w-[250px] md:w-[500px] bg-white border-secondary-light border-4 rounded-lg'
                     src={gifUrl}
-                    alt='Gif Example'
+                    alt={name.toUpperCase() + ' GIF'}
                   />
                 </div>
               </div>
