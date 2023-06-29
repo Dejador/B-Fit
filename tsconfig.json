@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2020",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/dropdown.jsx", "components/list-exercises.jsx", "app/exercises/page.jsx", "components/navbar-button.tsx", "app/page.jsx", "components/add-exercises-modal.jsx", "app/routines/new/page.jsx", "app/login/page.jsx", "components/navbar.tsx", "app/routines/page.jsx", "app/routines/edit/[id]/page.jsx", "app/api/get-exercises/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/dropdown.tsx", "components/list-exercises.tsx", "app/exercises/page.jsx", "components/navbar-button.tsx", "app/page.tsx", "components/add-exercises-modal.tsx", "app/routines/new/page.tsx", "app/login/page.tsx", "components/navbar.tsx", "app/routines/page.tsx", "app/routines/edit/[id]/page.tsx", "app/api/get-exercises/route.ts", "hooks/fetchExercises.ts", "hooks/fetchRoutines.ts", "context/AuthContext.js"],
   "exclude": ["node_modules"]
 }

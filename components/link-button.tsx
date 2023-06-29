@@ -6,7 +6,6 @@ export default function LinkButton({
   buttonDescription,
   className,
   descriptionStyle,
-  Image,
   type = 'button',
 }: {
   route: string;
@@ -14,7 +13,6 @@ export default function LinkButton({
   buttonDescription?: string;
   descriptionStyle?: string;
   className?: string;
-  Image?: string;
   type?: 'button' | 'submit'
 }) {
   return (

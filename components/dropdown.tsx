@@ -1,24 +1,23 @@
-'use client'
+'use client';
 
-import { Fragment, useState } from 'react';
+import { Fragment, SetStateAction, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import ListExercises from './list-exercises';
 import useFetchExercises from '../hooks/fetchExercises';
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Dropdown({ dropdownTitle }) {
-  const {
-    bodyPartList,
-    allBodyExercises,
-    loading,
-    getAllBodyExercises,
-  } = useFetchExercises();
+export default function Dropdown({ dropdownTitle }: { dropdownTitle: string }) {
+  const { bodyPartList, allBodyExercises, loading, getAllBodyExercises } =
+    useFetchExercises();
   const [selectedName, setSelelectedName] = useState('back');
   const [bodyPartIndex, setBodyPartIndex] = useState(0);
-  function onDropdownItemClick(bodyPart, index) {
+  function onDropdownItemClick(
+    bodyPart: SetStateAction<string>,
+    index: SetStateAction<number>
+  ) {
     setSelelectedName(bodyPart);
     setBodyPartIndex(index);
     return selectedName;
@@ -48,7 +47,7 @@ export default function Dropdown({ dropdownTitle }) {
           <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-40 md:w-52 ml-6 md:ml-10 text-sm md:text-base origin-top-right bg-white'>
             <div>
               {bodyPartList &&
-                bodyPartList.map((bodyPart, id) => (
+                bodyPartList.map((bodyPart: string, id: number) => (
                   <Menu.Item key={id}>
                     {({ active }) => (
                       <a
@@ -91,7 +90,6 @@ export default function Dropdown({ dropdownTitle }) {
         <ListExercises
           allExercises={allBodyExercises}
           bodyPart={selectedName}
-          bodyPartIndex={bodyPartIndex}
         />
       )}
     </>

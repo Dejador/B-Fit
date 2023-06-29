@@ -11,9 +11,9 @@ export default function Login() {
   const { login, currentUser } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
-  const handleKeypress = (e) => {
+  const handleKeypress = (e: { keyCode: number; }) => {
     if (e.keyCode === 13) {
       onSubmit();
     }

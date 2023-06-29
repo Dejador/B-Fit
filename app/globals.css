@@ -21,10 +21,10 @@ body {
 
 @layer components {
   .btn-navbar {
-    @apply border text-sm bg-main-light hover:bg-main-dark-b text-white px-3 h-[70%] my-auto leading-8 transition-colors rounded select-none;
+    @apply border text-sm bg-main-light hover:bg-main-dark-b text-white px-3 h-[70%] my-auto leading-8 transition-colors rounded hover:rounded select-none;
   }
   .btn-navbar-active {
-    @apply border text-sm bg-secondary-light text-white px-3 h-[70%] my-auto leading-8 rounded select-none;
+    @apply border text-sm bg-secondary-light text-white px-3 h-[70%] my-auto leading-8 rounded hover:rounded select-none;
   }
   .btn-mobile-menu {
     @apply text-sm hover:bg-main-dark-b w-[98%] ml-[1%] absolute left-0 py-2 text-white transition-colors select-none;
@@ -36,13 +36,13 @@ body {
     @apply text-secondary-alt hover:text-secondary-alt-b hover:cursor-pointer transition-colors select-none;
   }
   .btn-disabled {
-    @apply text-white bg-secondary-light hover:cursor-default border border-white px-2 py-1 text-sm opacity-70 rounded select-none;
+    @apply text-white bg-secondary-light hover:cursor-default border border-white px-2 py-1 text-sm opacity-70 rounded hover:rounded select-none;
   }
   .btn-create {
-    @apply text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none;
+    @apply text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded hover:rounded select-none;
   }
   .btn-create-alternate {
-    @apply text-white bg-secondary-alt hover:bg-secondary-alt-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none;
+    @apply text-white bg-secondary-alt hover:bg-secondary-alt-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded hover:rounded select-none;
   }
   .btn-cancel {
     @apply text-alert hover:text-alert-b hover:cursor-pointer transition-colors select-none;
@@ -51,7 +51,7 @@ body {
     @apply text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors select-none;
   }
   .btn-remove {
-    @apply text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none;
+    @apply text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded hover:rounded select-none;
   }
   .btn-edit {
     @apply text-secondary-light hover:text-secondary-light-b hover:cursor-pointer hover:transition-colors select-none;
@@ -61,6 +61,6 @@ body {
   }
 
   .loading {
-   @apply w-[50px] h-[50px] rounded-[50%] border border-8 border-main-light border-r-secondary-alt-b border-l-secondary-alt-b animate-spin;
+   @apply w-[50px] h-[50px] rounded-[50%] border-8 border-main-light border-r-secondary-alt-b border-l-secondary-alt-b animate-spin;
   }
 }
