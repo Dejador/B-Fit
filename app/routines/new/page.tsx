@@ -16,14 +16,14 @@ export default function NewRoutine() {
   const { currentUser } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
-  const [selectedExerciseIds, setSelectedExerciseIds] = useState([]);
-  const [newRoutine, setNewRoutine] = useState({});
+  const [selectedExerciseIds, setSelectedExerciseIds] = useState<{id:number, name:string}[]>([]);
+  const [newRoutine, setNewRoutine] = useState<{category: string, routineId: string, routineName:string, routineExercises:{}, routineCreationDate:number}>({category:'', routineId:'', routineName:'', routineExercises:[], routineCreationDate:-1});
   const [isDisabled, setIsDisabled] = useState(true);
   const [isSavedToDb, setIsSavedToDb] = useState(false);
   const [routineName, setRoutineName] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
   const [error, setError] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isSavedToDb) {
@@ -45,10 +45,10 @@ export default function NewRoutine() {
     }
   }, [routineName, selectedExerciseIds, isSavedToDb]);
 
-  function onAddExercise(id, name) {
+  function onAddExercise(id: number, name: string) {
     setSelectedExerciseIds([...selectedExerciseIds, {id, name}]);
   }
-  function onRemoveExercise(id) {
+  function onRemoveExercise(id: number) {
     const index = selectedExerciseIds.findIndex(exercise => exercise.id === id)
     const newExcerciseIds = [
       ...selectedExerciseIds.slice(0, index),
@@ -70,7 +70,9 @@ export default function NewRoutine() {
     setSelectedExerciseIds([]);
     setIsDisabled(true);
     setError(false);
-    inputRef.current.value = '';
+    if (inputRef.current !== null){
+      inputRef.current.value = '';
+    }
     setIsSavedToDb(false);
   }
 
@@ -115,13 +117,18 @@ export default function NewRoutine() {
     saveToDB();
   }, [newRoutine]);
 
+  function clearRoutineInfo() {
+    clearData()
+    setOpenWarningModal(false)
+  }
+
   return (
     <>
       <AddExercisesModal
         open={openModal}
         onClose={() => setOpenModal(false)}
         selectedExerciseIds={selectedExerciseIds}
-        setSelectedExerciseIds={setSelectedExerciseIds}
+        // setSelectedExerciseIds={setSelectedExerciseIds}  REVISAR SI ES NECESARIO!!!????
         onAddExercise={onAddExercise}
         onRemoveExercise={onRemoveExercise}
       />
@@ -140,7 +147,7 @@ export default function NewRoutine() {
         }
         altButtonText={!isDisabled && !error ? 'Create New Routine' : ''}
         altButtonStyle='btn-confirm'
-        onConfirm={() => clearData() + setOpenWarningModal(false)}
+        onConfirm={() => clearRoutineInfo()}
         warningMessage={warningMessage}
       />
       <div className='flex-col text-center mt-8 md:mt-44'>
@@ -178,7 +185,7 @@ export default function NewRoutine() {
             buttonTitle={'+ Add Exercise(s)'}
           />
         </div>
-        <div className='max-w-[90%]  md:max-w-[50%] max-h-[355px] pr-1 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b overflow-auto m-auto my-3 select-none'>
+        <div className='max-w-[90%]  md:max-w-[50%] max-h-[355px] pr-1 overflow-auto m-auto my-3 select-none'>
           {selectedExerciseIds.map(({ name, id}) => (
                 <div key={id}>
                   <div className='relative flex items-center border-y bg-main-light py-6 hover:bg-opacity-50'>

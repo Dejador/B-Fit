@@ -10,7 +10,7 @@ export default function WarningModal({
   altButtonText,
   altButtonStyle,
 }: {
-  open: () => void;
+  open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   warningMessage: string;
@@ -32,26 +32,28 @@ export default function WarningModal({
         className='w-[90%] md:w-[35%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
       >
         <div className='text-white justify-center align-middle flex h-[80%] select-none'>
-          <p className='flex text-center items-center px-12 py-6'>{warningMessage}</p>
+          <p className='flex text-center items-center px-12 py-6'>
+            {warningMessage}
+          </p>
         </div>
         <div className='flex justify-center gap-4 pb-4 select-none'>
-        <div>
-          <ActionButton
-            className={mainButtonStyle}
-            action={() => onCancel()}
-            buttonTitle={mainButtonText}
-          />
-        </div>
-
-        {altButtonText ? (
           <div>
             <ActionButton
-              className={altButtonStyle}
-              action={() => onConfirm()}
-              buttonTitle={altButtonText}
+              className={mainButtonStyle}
+              action={() => onCancel()}
+              buttonTitle={mainButtonText}
             />
           </div>
-        ) : null}
+
+          {altButtonText ? (
+            <div>
+              <ActionButton
+                className={altButtonStyle}
+                action={() => onConfirm()}
+                buttonTitle={altButtonText}
+              />
+            </div>
+          ) : null}
         </div>
       </div>
       <div></div>

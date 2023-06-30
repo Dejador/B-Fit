@@ -22,7 +22,7 @@ export default function Navbar() {
   return (
     <>
       {/* DESKTOP */}
-      <div className='hidden fixed md:flex md:w-full px-8 pt-2 z-10'>
+      <div className='hidden fixed md:flex md:w-full px-8 mt-4 z-10'>
         <div className='w-12 align-middle hover:animate-spin'>
           <LinkButton
             className={'w-12 h-12 absolute'}

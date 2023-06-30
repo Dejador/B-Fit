@@ -1,19 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import RoutineCard from '../../components/routine-card';
 import LinkButton from '../../components/link-button';
-import useFetchRoutines from '../../hooks/fetchRoutines';
 import { useAuth } from '../../context/AuthContext';
 import { doc, setDoc, deleteField } from 'firebase/firestore';
 import { db } from '../../utils/firebase';
 import WarningModal from '../../components/warning-modal';
+import useFetchRoutines from '@/hooks/fetchRoutines';
 
 export default function Routines() {
   const { routines, loading, error, getData } = useFetchRoutines();
   const { currentUser } = useAuth();
   const [openWarningModal, setOpenWarningModal] = useState(false);
-  const [deleteRoutineId, setDeleteRoutineId] = useState(null);
+  const [deleteRoutineId, setDeleteRoutineId] = useState(-1);
   const [isDeleted, setIsDeleted] = useState(false);
   const [routinesData, setRoutinesData] = useState([]);
 
@@ -27,9 +27,14 @@ export default function Routines() {
 
   getData(isDeleted);
 
-  function handleDelete(routineId) {
+  function handleDelete(routineId: SetStateAction<number>) {
     setOpenWarningModal(true);
     setDeleteRoutineId(routineId);
+  }
+
+  function closeWarningModal() {
+    setOpenWarningModal(false);
+    setIsDeleted(false);
   }
 
   async function handleDeleteConfirmation() {
@@ -68,7 +73,7 @@ export default function Routines() {
         open={openWarningModal}
         onCancel={
           isDeleted
-            ? () => setOpenWarningModal(false) + setIsDeleted(false)
+            ? () => closeWarningModal()
             : () => setOpenWarningModal(false)
         }
         mainButtonText={isDeleted ? 'Continue' : 'Cancel'}
@@ -82,20 +87,23 @@ export default function Routines() {
             : 'The selected routine will be deleted, continue?'
         }
       />
-      <div className='mt-24 md:mt-32 justify-center text-center align-middle flex fixed top-4 mx-auto w-full'>
+      <div className='mt-24 md:mt-32 justify-center text-center align-middle absolute top-4 mx-auto w-full'>
         <LinkButton
           className='btn-create'
           route={'/routines/new'}
           buttonTitle={'+ Create New Routine'}
         />
       </div>
-      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-24 md:mt-44 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b'>
+      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-24 md:mt-48'>
         {routines &&
           !loading &&
           currentUser &&
           routinesData
-            .sort((a, b) =>
-              a.routineCreationDate < b.routineCreationDate ? 1 : -1
+            .sort(
+              (
+                a: { routineCreationDate: number },
+                b: { routineCreationDate: number }
+              ) => (a.routineCreationDate < b.routineCreationDate ? 1 : -1)
             )
             .map(
               ({

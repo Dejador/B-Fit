@@ -1,14 +1,20 @@
 'use client';
 
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { auth, db } from '../utils/firebase';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  ReactNode,
+} from 'react';
+import { auth } from '../utils/firebase';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  User,
 } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -17,7 +23,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurentUser] = useState(null);
+  const [currentUser, setCurentUser] = useState(null)
   const [loading, setLoading] = useState(true);
   const userInfo = useRef();
 

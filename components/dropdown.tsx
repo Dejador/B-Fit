@@ -1,24 +1,23 @@
-'use client'
+'use client';
 
-import { Fragment, useState } from 'react';
+import { Fragment, SetStateAction, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import ListExercises from './list-exercises';
 import useFetchExercises from '../hooks/fetchExercises';
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Dropdown({ dropdownTitle }) {
-  const {
-    bodyPartList,
-    allBodyExercises,
-    loading,
-    getAllBodyExercises,
-  } = useFetchExercises();
+export default function Dropdown({ dropdownTitle }: { dropdownTitle: string }) {
+  const { bodyPartList, allBodyExercises, loading, getAllBodyExercises } =
+    useFetchExercises();
   const [selectedName, setSelelectedName] = useState('back');
   const [bodyPartIndex, setBodyPartIndex] = useState(0);
-  function onDropdownItemClick(bodyPart, index) {
+  function onDropdownItemClick(
+    bodyPart: SetStateAction<string>,
+    index: SetStateAction<number>
+  ) {
     setSelelectedName(bodyPart);
     setBodyPartIndex(index);
     return selectedName;
@@ -30,7 +29,7 @@ export default function Dropdown({ dropdownTitle }) {
     <>
       <Menu as='div' className='relative inline-block text-left'>
         <div>
-          <Menu.Button className='inline-flex w-52 md:w-72 border justify-center bg-main-light px-3 py-2 text-lg md:text-xl text-white hover:bg-main-dark-b mt-0 transition-colors rounded-md'>
+          <Menu.Button className='inline-flex w-52 md:w-72 border justify-center bg-main-light px-1 py-1 text-sm md:text-base text-white hover:bg-main-dark-b mt-0 transition-colors rounded-md'>
             {dropdownTitle}{' '}
             <p className='text-white right-3 md:right-5 absolute'>&#x25BD;</p>
           </Menu.Button>
@@ -48,7 +47,7 @@ export default function Dropdown({ dropdownTitle }) {
           <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-40 md:w-52 ml-6 md:ml-10 text-sm md:text-base origin-top-right bg-white'>
             <div>
               {bodyPartList &&
-                bodyPartList.map((bodyPart, id) => (
+                bodyPartList.map((bodyPart: string, id: number) => (
                   <Menu.Item key={id}>
                     {({ active }) => (
                       <a
@@ -72,7 +71,7 @@ export default function Dropdown({ dropdownTitle }) {
           </Menu.Items>
         </Transition>
       </Menu>
-      <div className='uppercase text-white text-sm md:text-lg mt-8 select-none'>
+      <div className='uppercase text-white text-sm md:text-base mt-5 select-none'>
         {selectedName}
       </div>
       {
@@ -91,7 +90,6 @@ export default function Dropdown({ dropdownTitle }) {
         <ListExercises
           allExercises={allBodyExercises}
           bodyPart={selectedName}
-          bodyPartIndex={bodyPartIndex}
         />
       )}
     </>

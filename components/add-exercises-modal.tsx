@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import ActionButton from './action-button';
-import useFetchExercises from '../hooks/fetchExercises'
+import useFetchExercises from '../hooks/fetchExercises';
 
 export default function AddExercisesModal({
   open,
@@ -8,26 +8,38 @@ export default function AddExercisesModal({
   selectedExerciseIds,
   onAddExercise,
   onRemoveExercise,
+}: {
+  open: boolean;
+  onClose: () => void;
+  selectedExerciseIds: {id: number, name: string}[];
+  onAddExercise: (id: number, name: string) => void;
+  onRemoveExercise: (id: number, name: string) => void;
 }) {
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const { bodyPartList, allBodyExercises, loading, error, getBodyPartList, getAllBodyExercises } = useFetchExercises();
-  const inputRef = useRef(null);
+  const { bodyPartList, allBodyExercises, getAllBodyExercises } =
+    useFetchExercises();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  getAllBodyExercises()
+  getAllBodyExercises();
 
   function clearSearch() {
     setSearchTerm('');
     setIsOpen(false);
-    setSelectedId(null);
+    setSelectedId(-1);
+  }
+
+  function closeModal() {
+    onClose();
+    clearSearch();
   }
 
   if (!open) return null;
   return (
     <div
       className='fixed w-full h-full bg-opacity-80 bg-main-dark-b z-10'
-      onClick={() => onClose() + clearSearch()}
+      onClick={() => closeModal()}
     >
       <div
         onClick={(e) => {
@@ -35,12 +47,20 @@ export default function AddExercisesModal({
         }}
         className='max-w-[98%] md:max-w-[65%] w-full h-[77%] fixed top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 border border-white bg-main-dark'
       >
-        <div className={isOpen ? 'flex w-full h-[80%] max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-hidden' : 'max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto' }>
+        <div
+          className={
+            isOpen
+              ? 'flex w-full h-[80%] max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none pr-1 overflow-hidden'
+              : 'max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none pr-1 overflow-auto'
+          }
+        >
           {bodyPartList.map((bodyPart, index) => (
             <div
               key={index}
               className={
-                isOpen && selectedId !== index ? 'hidden' : 'flex-initial w-full'
+                isOpen && selectedId !== index
+                  ? 'hidden'
+                  : 'flex-initial w-full'
               }
             >
               <div
@@ -53,7 +73,9 @@ export default function AddExercisesModal({
                   if (index !== selectedId) {
                     setSelectedId(index);
                     setSearchTerm('');
-                    inputRef.current.value = '';
+                    if (inputRef.current !== null) {
+                      inputRef.current.value = '';
+                    }
                     setIsOpen(true);
                   } else {
                     clearSearch();
@@ -77,14 +99,17 @@ export default function AddExercisesModal({
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <div className='max-h-[80%] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+              <div className='max-h-[80%] pr-1 overflow-auto'>
                 {allBodyExercises
-                  .filter((exercise) =>
+                  .filter((exercise: { name: string }) =>
                     exercise.name
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase())
                   )
-                  .filter((exercise) => exercise.bodyPart === bodyPart)
+                  .filter(
+                    (exercise: { bodyPart: string }) =>
+                      exercise.bodyPart === bodyPart
+                  )
                   .map(({ equipment, name, target, gifUrl, id, bodyPart }) => (
                     <div key={id}>
                       <div
@@ -98,7 +123,11 @@ export default function AddExercisesModal({
                           </p>
                           <div
                             className={
-                              selectedExerciseIds.map(({id}) => {return(id)} ).includes(id)
+                              selectedExerciseIds
+                                .map(({ id }) => {
+                                  return id;
+                                })
+                                .includes(id)
                                 ? 'hidden'
                                 : 'text-end mr-2 absolute right-0'
                             }
@@ -111,7 +140,11 @@ export default function AddExercisesModal({
                           </div>
                           <div
                             className={
-                              !selectedExerciseIds.map(({id}) => {return(id)} ).includes(id)
+                              !selectedExerciseIds
+                                .map(({ id }) => {
+                                  return id;
+                                })
+                                .includes(id)
                                 ? 'hidden'
                                 : 'text-end mr-2 absolute right-0'
                             }
@@ -134,7 +167,9 @@ export default function AddExercisesModal({
         <div className='flex fixed left-1/2 -translate-x-1/2 bottom-4'>
           <ActionButton
             className='btn-create'
-            action={() => {!isOpen ? onClose() + clearSearch() : clearSearch() }}
+            action={() => {
+              !isOpen ? closeModal() : clearSearch();
+            }}
             buttonTitle={isOpen ? 'Back' : 'Done'}
           />
         </div>

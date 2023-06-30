@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
 export default function useFetchExercises() {
-  const [allExercises, setAllExercises] = useState([]);
+  const [allExercises, setAllExercises] = useState<[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [bodyPartList, setBodyPartList] = useState('');
-  const [allBodyExercises, setAllBodyExercises] = useState('');
+  const [bodyPartList, setBodyPartList] = useState<string[]>([]);
+  const [allBodyExercises, setAllBodyExercises] = useState<[]>([]);
 
   useEffect(() => {
     async function getAllExercises() {

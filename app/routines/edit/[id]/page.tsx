@@ -11,20 +11,19 @@ import WarningModal from '@/components/warning-modal';
 import { useAuth } from '../../../../context/AuthContext';
 import useFetchRoutines from '@/hooks/fetchRoutines';
 
-export default function EditRoutine({ params }) {
+export default function EditRoutine({ params }:{params:{id:number}}) {
   const router = useRouter();
   const { currentUser } = useAuth();
   const { routines, loading, getData } = useFetchRoutines();
   const [openModal, setOpenModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
-  const [selectedExerciseIds, setSelectedExerciseIds] = useState([]);
-  const [equalSelectedExercises , setEqualSelectedExercises] = useState(true)
+  const [selectedExerciseIds, setSelectedExerciseIds] = useState<{id:number, name:string}[]>([]);
   const [initialExerciseIds, setInitialExerciseIds] = useState([]);
-  const [initialRoutineData, setInitialRoutineData] = useState(null);
-  const [initialRoutineName, setInitialRoutineName] = useState('');
+  const [initialRoutineData, setInitialRoutineData] = useState([]);
+  const [initialRoutineName, setInitialRoutineName] = useState<string>('');
   const [loadingInitialRoutineData, setLoadingInitialRoutineData] =
     useState(true);
-  const [updatedRoutine, setUpdatedRoutine] = useState({});
+  const [updatedRoutine, setUpdatedRoutine] = useState<{category: string, routineId: number, routineName:string, routineExercises:{}, routineCreationDate:number}>({category:'', routineId:-1, routineName:'', routineExercises:[], routineCreationDate:-1});
   const [isDisabled, setIsDisabled] = useState(true);
   const [isSavedToDb, setIsSavedToDb] = useState(false);
   const [routineName, setRoutineName] = useState('');
@@ -41,7 +40,7 @@ export default function EditRoutine({ params }) {
       setInitialRoutineData(
         Object.keys(routines)
           .map((routine) => routines[routine])
-          .filter((routineItem) => routineItem.routineId === editRoutineId)
+          .filter((routineItem:{routineId:number}) => routineItem.routineId === editRoutineId)
       );
     }
   }, [routines]);
@@ -49,7 +48,7 @@ export default function EditRoutine({ params }) {
   useEffect(() => {
     if (initialRoutineData) {
       setRoutineName(
-        initialRoutineData.map(({ routineName }) => routineName).pop()
+        initialRoutineData.map(({ routineName }:{routineName:string|any}) => routineName).pop() //FIX ANY????
       );
       setSelectedExerciseIds(
         initialRoutineData
@@ -57,7 +56,7 @@ export default function EditRoutine({ params }) {
           .flat()
       );
       setInitialRoutineName(
-        initialRoutineData.map(({ routineName }) => routineName).pop()
+        initialRoutineData.map(({ routineName }:{routineName:string|any}) => routineName).pop() //FIX ANY????
       );
       setInitialExerciseIds(
         initialRoutineData
@@ -98,12 +97,12 @@ export default function EditRoutine({ params }) {
     }
   }, [routineName, selectedExerciseIds, isSavedToDb]);
 
-  function onAddExercise(id, name) {
+  function onAddExercise(id:number, name: string) {
     setSelectedExerciseIds([...selectedExerciseIds, { id, name }]);
   }
-  function onRemoveExercise(id) {
+  function onRemoveExercise(id: number) {
     const index = selectedExerciseIds.findIndex(
-      (exercise) => exercise.id === id
+      (exercise:{id:number}) => exercise.id === id
     );
     const newExcerciseIds = [
       ...selectedExerciseIds.slice(0, index),
@@ -113,23 +112,13 @@ export default function EditRoutine({ params }) {
   }
   
   function handleIsDisabled() {
-    if (routineName.length && selectedExerciseIds.length && routineName !== initialRoutineName ||
-      routineName.length && selectedExerciseIds.length && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index])) ||
-      routineName.length && selectedExerciseIds.length && routineName !== initialRoutineName && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index]))) {
+    if (routineName?.length && selectedExerciseIds.length && routineName !== initialRoutineName ||
+      routineName?.length && selectedExerciseIds.length && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index])) ||
+      routineName?.length && selectedExerciseIds.length && routineName !== initialRoutineName && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index]))) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }
-
-
-  function clearData() {
-    setRoutineName('');
-    setSelectedExerciseIds([]);
-    setIsDisabled(true);
-    setError(false);
-    inputRef.current.value = '';
-    setIsSavedToDb(false);
   }
 
   useEffect(() => {
@@ -192,12 +181,13 @@ export default function EditRoutine({ params }) {
         open={openModal}
         onClose={() => setOpenModal(false)}
         selectedExerciseIds={selectedExerciseIds}
-        setSelectedExerciseIds={setSelectedExerciseIds}
+        // setSelectedExerciseIds={setSelectedExerciseIds} REVISAR SI ES NECESARIO!!!????
         onAddExercise={onAddExercise}
         onRemoveExercise={onRemoveExercise}
       />
       <WarningModal
         open={openWarningModal}
+        onConfirm={() => {}}
         onCancel={
           !isDisabled && !error
             ? () => router.push('/routines')
@@ -247,7 +237,7 @@ export default function EditRoutine({ params }) {
                 buttonTitle={'+ Add Exercise(s)'}
               />
             </div>
-            <div className='max-w-[90%]  md:max-w-[50%] max-h-[355px] pr-1 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b overflow-auto m-auto my-3 select-none'>
+            <div className='max-w-[90%]  md:max-w-[50%] max-h-[355px] pr-1 overflow-auto m-auto my-3 select-none'>
               {selectedExerciseIds &&
                 selectedExerciseIds.map(({ name, id }) => (
                   <div key={id}>

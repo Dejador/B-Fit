@@ -5,15 +5,16 @@ import ActionButton from '../../components/action-button';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
+import { FirebaseError } from 'firebase/app';
 
 export default function Login() {
   const router = useRouter();
   const { register, currentUser } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
-  const handleKeypress = (e) => {
+  const handleKeypress = (e: { keyCode: number }) => {
     if (e.keyCode === 13) {
       onSubmit();
     }
@@ -28,14 +29,16 @@ export default function Login() {
       await register(email, password);
       router.back();
     } catch (err) {
-      if (err.code === 'auth/email-already-in-use') {
-        setError('User already registered');
-      } else if (err.code === 'auth/weak-password'){
-        setError('Password must be al least 6 characters long');
-      }
-       else {
-        setError('There was a problem creating your account, please try again');
-      }
+      if (err instanceof FirebaseError)
+        if (err.code === 'auth/email-already-in-use') {
+          setError('User already registered');
+        } else if (err.code === 'auth/weak-password') {
+          setError('Password must be al least 6 characters long');
+        } else {
+          setError(
+            'There was a problem creating your account, please try again'
+          );
+        }
     }
     return;
   }
@@ -43,12 +46,8 @@ export default function Login() {
   return (
     <>
       <div className='flex h-screen fixed top-0 w-full items-center justify-center flex-col select-none'>
-        <h1 className='text-white text-md md:text-xl mb-2'>
-          Register
-        </h1>
-        {currentUser && (
-          <div className='text-white'>Already registered</div>
-        )}
+        <h1 className='text-white text-md md:text-xl mb-2'>Register</h1>
+        {currentUser && <div className='text-white'>Already registered</div>}
         {!currentUser && (
           <div className='flex flex-col text-center min-w-[50%] md:min-w-[20%]'>
             {error && (

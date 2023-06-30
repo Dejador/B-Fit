@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'B-Fit',
+  description:'View and Manage Fitness Exercises'
 };
 
 export default function RootLayout({
