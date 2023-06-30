@@ -24,7 +24,7 @@ export default function RoutineCard({
 
   return (
     <>
-      <div className='mt-8 justify-center text-center align-middle flex mx-10 md:mx-0'>
+      <div className='mt-8 justify-center text-center text-sm md:text-base align-middle flex mx-10 md:mx-0'>
         <div className='text-white text-center  select-none'>
           <div className='flex w-full'>
             <div className='w-[325px] md:w-[400px] bg-main-light-b border-t border-r border-l py-1 uppercase'>
@@ -44,10 +44,10 @@ export default function RoutineCard({
               buttonTitle={'X Delete'}
             />
           </div>
-          <div className='h-[154px] overflow-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b pr-[2px]'>
+          <div className='h-[154px] overflow-auto pr-[2px]'>
             {routineExercises.map(({ name, id }) => (
               <div className='flex bg-main-dark-b' key={id}>
-                <div className='w-[325px] md:w-[400px] border-white border-b border-r border-l  py-1 px-2 capitalize'>
+                <div className='w-[325px] md:w-[400px] border-white border-b border-r border-l py-1 px-2 capitalize'>
                   {name}
                 </div>
               </div>

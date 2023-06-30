@@ -50,8 +50,8 @@ export default function AddExercisesModal({
         <div
           className={
             isOpen
-              ? 'flex w-full h-[80%] max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-hidden'
-              : 'max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'
+              ? 'flex w-full h-[80%] max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none pr-1 overflow-hidden'
+              : 'max-w-[95%] md:max-w-[75%] m-auto mt-[3%] max-h-[82%] select-none pr-1 overflow-auto'
           }
         >
           {bodyPartList.map((bodyPart, index) => (
@@ -99,7 +99,7 @@ export default function AddExercisesModal({
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <div className='max-h-[80%] scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+              <div className='max-h-[80%] pr-1 overflow-auto'>
                 {allBodyExercises
                   .filter((exercise: { name: string }) =>
                     exercise.name

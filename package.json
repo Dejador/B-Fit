@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
-    "@types/node": "20.1.4",
-    "@types/react": "18.2.6",
-    "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "encoding": "^0.1.13",
     "eslint": "8.40.0",
@@ -23,11 +20,15 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
-    "typescript": "5.0.4",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.3.2",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
     "@types/uuid": "^9.0.2",
-    "tailwind-scrollbar": "^3.0.4"
+    "tailwind-scrollbar": "^3.0.4",
+    "typescript": "^5.1.6"
   }
 }

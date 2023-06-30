@@ -87,14 +87,14 @@ export default function Routines() {
             : 'The selected routine will be deleted, continue?'
         }
       />
-      <div className='mt-24 md:mt-32 justify-center text-center align-middle flex fixed top-4 mx-auto w-full'>
+      <div className='mt-24 md:mt-32 justify-center text-center align-middle absolute top-4 mx-auto w-full'>
         <LinkButton
           className='btn-create'
           route={'/routines/new'}
           buttonTitle={'+ Create New Routine'}
         />
       </div>
-      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-24 md:mt-44 scrollbar-thin scrollbar-track-white scrollbar-thumb-main-light-b'>
+      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-24 md:mt-48'>
         {routines &&
           !loading &&
           currentUser &&

@@ -41,7 +41,7 @@ export default function ListExercises({
 
   return (
     <>
-      <div className='text-secondary-light text-right w-[350px] md:w-[675px] mx-auto mt-2 text-sm md:text-base hover:text-secondary-light-b select-none'>
+      <div className='text-secondary-light text-right w-[90%] md:w-[675px] mx-auto mt-2 text-sm md:text-base hover:text-secondary-light-b select-none'>
         <button onClick={() => executeToggleAndClear()}>
           {isActiveAll ? '- Collapse All' : '+ Expand All'}
         </button>
@@ -56,7 +56,7 @@ export default function ListExercises({
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className='max-h-[450px] w-[90%] md:w-[675px] mx-auto mt-6 bg-secondary-a  select-none scrollbar-track-white pr-1 scrollbar-thin scrollbar-thumb-main-light-b overflow-auto'>
+      <div className='max-h-[450px] w-[90%] md:w-[675px] mx-auto mt-6 bg-secondary-a select-none pr-1 overflow-auto'>
         {allExercises &&
           allExercises
             .filter((exercise: { name: string }) =>
@@ -88,8 +88,8 @@ export default function ListExercises({
                   <div
                     className={
                       selectedId === id
-                        ? 'flex justify-center border-y bg-main-light-b hover:cursor-pointer py-3'
-                        : 'flex justify-center border-y bg-main-dark-b hover:bg-main-light-b hover:cursor-pointer py-3'
+                        ? 'flex justify-center border-y bg-main-light-b hover:cursor-pointer py-2'
+                        : 'flex justify-center border-y bg-main-dark-b hover:bg-main-light-b hover:cursor-pointer py-2'
                     }
                     onClick={() => {
                       if (id !== selectedId) {
