@@ -12,6 +12,14 @@ import { useAuth } from '../../../../context/AuthContext';
 import useFetchRoutines from '@/hooks/fetchRoutines';
 
 export default function EditRoutine({ params }:{params:{id:number}}) {
+  interface IinitialRoutineData {
+    routineName: string,
+    routineExercises: []
+  }[]
+
+  
+
+
   const router = useRouter();
   const { currentUser } = useAuth();
   const { routines, loading, getData } = useFetchRoutines();
@@ -19,19 +27,17 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [selectedExerciseIds, setSelectedExerciseIds] = useState<{id:number, name:string}[]>([]);
   const [initialExerciseIds, setInitialExerciseIds] = useState([]);
-  const [initialRoutineData, setInitialRoutineData] = useState([]);
-  const [initialRoutineName, setInitialRoutineName] = useState<string>('');
+  const [initialRoutineData, setInitialRoutineData] = useState<IinitialRoutineData[]>([]);
+  const [initialRoutineName, setInitialRoutineName] = useState<string | undefined>('');
   const [loadingInitialRoutineData, setLoadingInitialRoutineData] =
     useState(true);
-  const [updatedRoutine, setUpdatedRoutine] = useState<{category: string, routineId: number, routineName:string, routineExercises:{}, routineCreationDate:number}>({category:'', routineId:-1, routineName:'', routineExercises:[], routineCreationDate:-1});
+  const [updatedRoutine, setUpdatedRoutine] = useState<{category: string, routineId: number, routineName:string|undefined, routineExercises:{}, routineCreationDate:number}>({category:'', routineId:-1, routineName:'', routineExercises:[], routineCreationDate:-1});
   const [isDisabled, setIsDisabled] = useState(true);
   const [isSavedToDb, setIsSavedToDb] = useState(false);
-  const [routineName, setRoutineName] = useState('');
+  const [routineName, setRoutineName] = useState<string | undefined>('');
   const [warningMessage, setWarningMessage] = useState('');
   const [error, setError] = useState(false);
   const inputRef = useRef(null);
-
-  // NEW //////////////////////////////////////////////////////// NEW //
 
   getData();
   useEffect(() => {
@@ -48,7 +54,7 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
   useEffect(() => {
     if (initialRoutineData) {
       setRoutineName(
-        initialRoutineData.map(({ routineName }:{routineName:string|any}) => routineName).pop() //FIX ANY????
+        initialRoutineData.map(({ routineName }) => routineName).pop()
       );
       setSelectedExerciseIds(
         initialRoutineData
@@ -56,7 +62,7 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
           .flat()
       );
       setInitialRoutineName(
-        initialRoutineData.map(({ routineName }:{routineName:string|any}) => routineName).pop() //FIX ANY????
+        initialRoutineData.map(({ routineName }) => routineName).pop()
       );
       setInitialExerciseIds(
         initialRoutineData
@@ -69,8 +75,6 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
   useEffect(() => {
     setLoadingInitialRoutineData(false);
   }, [initialRoutineData]);
-
-  // END NEW //////////////////////////////////////////////////////// END NEW //
 
   useEffect(() => {
     if (isSavedToDb) {
