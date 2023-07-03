@@ -22,8 +22,8 @@ export default function Navbar() {
   return (
     <>
       {/* DESKTOP */}
-      <div className='hidden fixed md:flex md:w-full px-8 mt-4 z-10'>
-        <div className='w-12 align-middle hover:animate-spin'>
+      <div className='hidden fixed md:flex md:w-full px-8 top-0 mt-4 z-10'>
+        <div className={isActive ? 'animate-none' : 'w-12 align-middle hover:animate-spin'} onTouchEnd={() => setActive(true)} >
           <LinkButton
             className={'w-12 h-12 absolute'}
             route={'/'}
@@ -71,11 +71,7 @@ export default function Navbar() {
       {/* MOBILE */}
       <div className='w-full flex justify-center'>
         <div
-          className={
-            isActive
-              ? 'md:hidden mt-6 cursor-pointer hover:animate-spin z-10'
-              : 'md:hidden mt-6 cursor-pointer z-10'
-          }
+          className={'md:hidden mt-6 cursor-pointer z-10'}
           onClick={handleToggle}
         >
           <Image

@@ -89,7 +89,7 @@ export default function Routines() {
       />
       <div className='mt-24 md:mt-32 justify-center text-center align-middle absolute top-4 mx-auto w-full'>
         <LinkButton
-          className='btn-create'
+          className='btn-create flex w-44 justify-center m-auto'
           route={'/routines/new'}
           buttonTitle={'+ Create New Routine'}
         />

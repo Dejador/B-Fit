@@ -42,16 +42,27 @@ body {
   background: #46465B; 
 }
 
-
 @layer components {
   .btn-navbar {
-    @apply border text-sm bg-main-light hover:bg-main-dark-b text-white px-3 h-[70%] my-auto leading-8 transition-colors rounded hover:rounded select-none;
+    -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+    @apply border text-sm bg-main-light hover:bg-main-dark-b text-white px-3 h-[70%] my-auto leading-8 transition-colors rounded select-none;
   }
   .btn-navbar-active {
-    @apply border text-sm bg-secondary-light text-white px-3 h-[70%] my-auto leading-8 rounded hover:rounded select-none;
+    -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+    @apply border text-sm bg-secondary-light text-white px-3 h-[70%] my-auto leading-8 rounded select-none;
   }
   .btn-mobile-menu {
     @apply text-sm hover:bg-main-dark-b w-[98%] ml-[1%] absolute left-0 py-2 text-white transition-colors select-none;
+  }
+  .btn-desktp-menu {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    @apply flex flex-col h-[100px] md:h-[150px] justify-center border border-white text-sm md:text-2xl bg-main-light hover:bg-main-dark-b text-secondary-light-b py-3 md:py-6 opacity-90 transition-colors rounded-lg text-center w-52 md:w-60;
   }
   .btn-confirm {
     @apply text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors select-none;
@@ -60,13 +71,16 @@ body {
     @apply text-secondary-alt hover:text-secondary-alt-b hover:cursor-pointer transition-colors select-none;
   }
   .btn-disabled {
-    @apply text-white bg-secondary-light hover:cursor-default border border-white px-2 py-1 text-sm opacity-70 rounded hover:rounded select-none;
+    @apply text-white bg-secondary-light hover:cursor-default border border-white px-2 py-1 text-sm opacity-70 rounded select-none;
   }
   .btn-create {
-    @apply text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded hover:rounded select-none;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    @apply text-white bg-secondary-light hover:bg-secondary-light-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none;
   }
   .btn-create-alternate {
-    @apply text-white bg-secondary-alt hover:bg-secondary-alt-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded hover:rounded select-none;
+    @apply text-white bg-secondary-alt hover:bg-secondary-alt-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none;
   }
   .btn-cancel {
     @apply text-alert hover:text-alert-b hover:cursor-pointer transition-colors select-none;
@@ -75,7 +89,7 @@ body {
     @apply text-secondary-light hover:text-secondary-light-b hover:cursor-pointer transition-colors select-none;
   }
   .btn-remove {
-    @apply text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded hover:rounded select-none;
+    @apply text-white bg-alert hover:bg-alert-b hover:cursor-pointer transition-colors border border-white px-2 py-1 text-sm rounded select-none;
   }
   .btn-edit {
     @apply text-secondary-light hover:text-secondary-light-b hover:cursor-pointer hover:transition-colors select-none;

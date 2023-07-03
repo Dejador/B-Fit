@@ -22,7 +22,7 @@ export default function WarningModal({
   if (!open) return null;
   return (
     <div
-      className='fixed w-full h-full bg-opacity-80 bg-main-dark-b z-10'
+      className='fixed top-0 w-full h-full bg-opacity-80 bg-main-dark-b z-10'
       onClick={() => onCancel()}
     >
       <div
