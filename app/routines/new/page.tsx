@@ -10,14 +10,29 @@ import ActionButton from '@/components/action-button';
 import AddExercisesModal from '@/components/add-exercises-modal';
 import WarningModal from '@/components/warning-modal';
 import { useAuth } from '../../../context/AuthContext';
+import { motion } from 'framer-motion';
 
 export default function NewRoutine() {
   const router = useRouter();
   const { currentUser } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
-  const [selectedExerciseIds, setSelectedExerciseIds] = useState<{id:number, name:string}[]>([]);
-  const [newRoutine, setNewRoutine] = useState<{category: string, routineId: string, routineName:string, routineExercises:{}, routineCreationDate:number}>({category:'', routineId:'', routineName:'', routineExercises:[], routineCreationDate:-1});
+  const [selectedExerciseIds, setSelectedExerciseIds] = useState<
+    { id: number; name: string }[]
+  >([]);
+  const [newRoutine, setNewRoutine] = useState<{
+    category: string;
+    routineId: string;
+    routineName: string;
+    routineExercises: {};
+    routineCreationDate: number;
+  }>({
+    category: '',
+    routineId: '',
+    routineName: '',
+    routineExercises: [],
+    routineCreationDate: -1,
+  });
   const [isDisabled, setIsDisabled] = useState(true);
   const [isSavedToDb, setIsSavedToDb] = useState(false);
   const [routineName, setRoutineName] = useState('');
@@ -46,14 +61,16 @@ export default function NewRoutine() {
   }, [routineName, selectedExerciseIds, isSavedToDb]);
 
   function onAddExercise(id: number, name: string) {
-    setSelectedExerciseIds([...selectedExerciseIds, {id, name}]);
+    setSelectedExerciseIds([...selectedExerciseIds, { id, name }]);
   }
   function onRemoveExercise(id: number) {
-    const index = selectedExerciseIds.findIndex(exercise => exercise.id === id)
+    const index = selectedExerciseIds.findIndex(
+      (exercise) => exercise.id === id
+    );
     const newExcerciseIds = [
       ...selectedExerciseIds.slice(0, index),
       ...selectedExerciseIds.slice(index + 1),
-    ]
+    ];
     setSelectedExerciseIds(newExcerciseIds);
   }
 
@@ -70,7 +87,7 @@ export default function NewRoutine() {
     setSelectedExerciseIds([]);
     setIsDisabled(true);
     setError(false);
-    if (inputRef.current !== null){
+    if (inputRef.current !== null) {
       inputRef.current.value = '';
     }
     setIsSavedToDb(false);
@@ -118,8 +135,8 @@ export default function NewRoutine() {
   }, [newRoutine]);
 
   function clearRoutineInfo() {
-    clearData()
-    setOpenWarningModal(false)
+    clearData();
+    setOpenWarningModal(false);
   }
 
   return (
@@ -128,7 +145,6 @@ export default function NewRoutine() {
         open={openModal}
         onClose={() => setOpenModal(false)}
         selectedExerciseIds={selectedExerciseIds}
-        // setSelectedExerciseIds={setSelectedExerciseIds}  REVISAR SI ES NECESARIO!!!????
         onAddExercise={onAddExercise}
         onRemoveExercise={onRemoveExercise}
       />
@@ -141,16 +157,18 @@ export default function NewRoutine() {
         }
         mainButtonText={!isDisabled && !error ? 'View Routines' : 'Ok'}
         mainButtonStyle={
-          !isDisabled && !error
-            ? 'btn-confirm-alternate'
-            : 'btn-confirm'
+          !isDisabled && !error ? 'btn-confirm-alternate' : 'btn-confirm'
         }
         altButtonText={!isDisabled && !error ? 'Create New Routine' : ''}
         altButtonStyle='btn-confirm'
         onConfirm={() => clearRoutineInfo()}
         warningMessage={warningMessage}
       />
-      <div className='flex-col text-center mt-8 md:mt-44'>
+      <motion.div
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 1 }}
+        className='flex-col text-center mt-8 md:mt-44'
+      >
         {!currentUser && (
           <div className='text-white text-center px-2 py-1 mb-4 w-[350px] border border-alert text-sm mx-auto flex justify-center'>
             Please<span>&nbsp;</span>
@@ -186,23 +204,22 @@ export default function NewRoutine() {
           />
         </div>
         <div className='max-w-[90%]  md:max-w-[50%] max-h-[355px] pr-1 overflow-auto m-auto my-3 select-none'>
-          {selectedExerciseIds.map(({ name, id}) => (
-                <div key={id}>
-                  <div className='relative flex items-center border-y bg-main-light py-6 hover:bg-opacity-50'>
-                    <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
-                      {name}
-                    </p>
-                    <div className='text-end mr-2 absolute right-0'>
-                      <ActionButton
-                        className={'btn-remove w-[30px]'}
-                        action={() => onRemoveExercise(id)}
-                        buttonTitle={'-'}
-                      />
-                    </div>
-                  </div>
+          {selectedExerciseIds.map(({ name, id }) => (
+            <div key={id}>
+              <div className='relative flex items-center border-y bg-main-light py-6 hover:bg-opacity-50'>
+                <p className='absolute w-full text-white text-center capitalize text-sm md:text-base px-14'>
+                  {name}
+                </p>
+                <div className='text-end mr-2 absolute right-0'>
+                  <ActionButton
+                    className={'btn-remove w-[30px]'}
+                    action={() => onRemoveExercise(id)}
+                    buttonTitle={'-'}
+                  />
                 </div>
-              ))
-          }
+              </div>
+            </div>
+          ))}
         </div>
         <div className='mt-3'>
           <div className='flex justify-center'></div>
@@ -223,7 +240,7 @@ export default function NewRoutine() {
             buttonTitle={'Cancel'}
           />
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

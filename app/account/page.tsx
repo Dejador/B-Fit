@@ -5,6 +5,7 @@ import LinkButton from '../../components/link-button';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Account() {
   const router = useRouter();
@@ -29,7 +30,11 @@ export default function Account() {
 
   return (
     <>
-      <div className='flex min-h-[80vh] items-center justify-center flex-col select-none'>
+      <motion.div
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 1 }}
+        className='flex min-h-[80vh] items-center justify-center flex-col select-none'
+      >
         <h1 className='text-white text-xl'>My Account</h1>
         {currentUser && !isGuest && (
           <div className='mt-2 text-white'>
@@ -49,7 +54,8 @@ export default function Account() {
               className='btn-add'
               route={'/login'}
               buttonTitle={'Log In'}
-            /><span>&nbsp;</span>
+            />
+            <span>&nbsp;</span>
             to see your details
           </div>
         )}
@@ -63,7 +69,7 @@ export default function Account() {
             />
           </div>
         )}
-      </div>
+      </motion.div>
     </>
   );
 }

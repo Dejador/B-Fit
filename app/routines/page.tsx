@@ -6,6 +6,7 @@ import LinkButton from '../../components/link-button';
 import { useAuth } from '../../context/AuthContext';
 import { doc, setDoc, deleteField } from 'firebase/firestore';
 import { db } from '../../utils/firebase';
+import { motion } from 'framer-motion';
 import WarningModal from '../../components/warning-modal';
 import useFetchRoutines from '@/hooks/fetchRoutines';
 
@@ -87,14 +88,22 @@ export default function Routines() {
             : 'The selected routine will be deleted, continue?'
         }
       />
-      <div className='mt-24 md:mt-32 justify-center text-center align-middle absolute top-4 mx-auto w-full'>
+      <motion.div
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 1 }}
+        className='mt-24 md:mt-32 justify-center text-center align-middle absolute top-4 mx-auto w-full'
+      >
         <LinkButton
           className='btn-create flex w-44 justify-center m-auto'
           route={'/routines/new'}
           buttonTitle={'+ Create New Routine'}
         />
-      </div>
-      <div className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-24 md:mt-48'>
+      </motion.div>
+      <motion.div
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 1 }}
+        className='flex justify-center gap-1 md:gap-8 flex-wrap max-h-[550px] overflow-auto mt-24 md:mt-48'
+      >
         {routines &&
           !loading &&
           currentUser &&
@@ -123,7 +132,7 @@ export default function Routines() {
                 </div>
               )
             )}
-      </div>
+      </motion.div>
     </>
   );
 }

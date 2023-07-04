@@ -9,29 +9,46 @@ import ActionButton from '@/components/action-button';
 import AddExercisesModal from '@/components/add-exercises-modal';
 import WarningModal from '@/components/warning-modal';
 import { useAuth } from '../../../../context/AuthContext';
+import { motion } from 'framer-motion';
 import useFetchRoutines from '@/hooks/fetchRoutines';
 
-export default function EditRoutine({ params }:{params:{id:number}}) {
+export default function EditRoutine({ params }: { params: { id: number } }) {
   interface IinitialRoutineData {
-    routineName: string,
-    routineExercises: []
-  }[]
-
-  
-
+    routineName: string;
+    routineExercises: [];
+  }
+  [];
 
   const router = useRouter();
   const { currentUser } = useAuth();
   const { routines, loading, getData } = useFetchRoutines();
   const [openModal, setOpenModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
-  const [selectedExerciseIds, setSelectedExerciseIds] = useState<{id:number, name:string}[]>([]);
+  const [selectedExerciseIds, setSelectedExerciseIds] = useState<
+    { id: number; name: string }[]
+  >([]);
   const [initialExerciseIds, setInitialExerciseIds] = useState([]);
-  const [initialRoutineData, setInitialRoutineData] = useState<IinitialRoutineData[]>([]);
-  const [initialRoutineName, setInitialRoutineName] = useState<string | undefined>('');
+  const [initialRoutineData, setInitialRoutineData] = useState<
+    IinitialRoutineData[]
+  >([]);
+  const [initialRoutineName, setInitialRoutineName] = useState<
+    string | undefined
+  >('');
   const [loadingInitialRoutineData, setLoadingInitialRoutineData] =
     useState(true);
-  const [updatedRoutine, setUpdatedRoutine] = useState<{category: string, routineId: number, routineName:string|undefined, routineExercises:{}, routineCreationDate:number}>({category:'', routineId:-1, routineName:'', routineExercises:[], routineCreationDate:-1});
+  const [updatedRoutine, setUpdatedRoutine] = useState<{
+    category: string;
+    routineId: number;
+    routineName: string | undefined;
+    routineExercises: {};
+    routineCreationDate: number;
+  }>({
+    category: '',
+    routineId: -1,
+    routineName: '',
+    routineExercises: [],
+    routineCreationDate: -1,
+  });
   const [isDisabled, setIsDisabled] = useState(true);
   const [isSavedToDb, setIsSavedToDb] = useState(false);
   const [routineName, setRoutineName] = useState<string | undefined>('');
@@ -46,7 +63,10 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
       setInitialRoutineData(
         Object.keys(routines)
           .map((routine) => routines[routine])
-          .filter((routineItem:{routineId:number}) => routineItem.routineId === editRoutineId)
+          .filter(
+            (routineItem: { routineId: number }) =>
+              routineItem.routineId === editRoutineId
+          )
       );
     }
   }, [routines]);
@@ -83,12 +103,28 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
       setWarningMessage(
         'An error ocurred while updating your routine, please try again'
       );
-    } else if (routineName === initialRoutineName && ((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index]))) {
-      setWarningMessage(
-        'There are no changes yet'
-      );
-    }
-    else if (selectedExerciseIds.length === 0 && routineName === '') {
+    } else if (
+      routineName === initialRoutineName &&
+      selectedExerciseIds.map(function (exerciseId) {
+        return exerciseId['id'];
+      }).length ===
+        initialExerciseIds.map(function (exerciseId) {
+          return exerciseId['id'];
+        }).length &&
+      selectedExerciseIds
+        .map(function (exerciseId) {
+          return exerciseId['id'];
+        })
+        .every(
+          (element, index) =>
+            element ===
+            initialExerciseIds.map(function (exerciseId) {
+              return exerciseId['id'];
+            })[index]
+        )
+    ) {
+      setWarningMessage('There are no changes yet');
+    } else if (selectedExerciseIds.length === 0 && routineName === '') {
       setWarningMessage(
         'Please enter a Routine Name and Add Exercises to continue'
       );
@@ -101,12 +137,12 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
     }
   }, [routineName, selectedExerciseIds, isSavedToDb]);
 
-  function onAddExercise(id:number, name: string) {
+  function onAddExercise(id: number, name: string) {
     setSelectedExerciseIds([...selectedExerciseIds, { id, name }]);
   }
   function onRemoveExercise(id: number) {
     const index = selectedExerciseIds.findIndex(
-      (exercise:{id:number}) => exercise.id === id
+      (exercise: { id: number }) => exercise.id === id
     );
     const newExcerciseIds = [
       ...selectedExerciseIds.slice(0, index),
@@ -114,11 +150,56 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
     ];
     setSelectedExerciseIds(newExcerciseIds);
   }
-  
+
   function handleIsDisabled() {
-    if (routineName?.length && selectedExerciseIds.length && routineName !== initialRoutineName ||
-      routineName?.length && selectedExerciseIds.length && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index])) ||
-      routineName?.length && selectedExerciseIds.length && routineName !== initialRoutineName && !((selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']})).length && (selectedExerciseIds.map(function(exerciseId) {return exerciseId['id']})).every((element, index) => element === (initialExerciseIds.map(function(exerciseId) {return exerciseId['id']}))[index]))) {
+    if (
+      (routineName?.length &&
+        selectedExerciseIds.length &&
+        routineName !== initialRoutineName) ||
+      (routineName?.length &&
+        selectedExerciseIds.length &&
+        !(
+          selectedExerciseIds.map(function (exerciseId) {
+            return exerciseId['id'];
+          }).length ===
+            initialExerciseIds.map(function (exerciseId) {
+              return exerciseId['id'];
+            }).length &&
+          selectedExerciseIds
+            .map(function (exerciseId) {
+              return exerciseId['id'];
+            })
+            .every(
+              (element, index) =>
+                element ===
+                initialExerciseIds.map(function (exerciseId) {
+                  return exerciseId['id'];
+                })[index]
+            )
+        )) ||
+      (routineName?.length &&
+        selectedExerciseIds.length &&
+        routineName !== initialRoutineName &&
+        !(
+          selectedExerciseIds.map(function (exerciseId) {
+            return exerciseId['id'];
+          }).length ===
+            initialExerciseIds.map(function (exerciseId) {
+              return exerciseId['id'];
+            }).length &&
+          selectedExerciseIds
+            .map(function (exerciseId) {
+              return exerciseId['id'];
+            })
+            .every(
+              (element, index) =>
+                element ===
+                initialExerciseIds.map(function (exerciseId) {
+                  return exerciseId['id'];
+                })[index]
+            )
+        ))
+    ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -165,7 +246,7 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
     }
     saveToDB();
   }, [updatedRoutine]);
-  
+
   return (
     <>
       {
@@ -185,7 +266,6 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
         open={openModal}
         onClose={() => setOpenModal(false)}
         selectedExerciseIds={selectedExerciseIds}
-        // setSelectedExerciseIds={setSelectedExerciseIds} REVISAR SI ES NECESARIO!!!????
         onAddExercise={onAddExercise}
         onRemoveExercise={onRemoveExercise}
       />
@@ -205,7 +285,11 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
       />
       {!loadingInitialRoutineData && (
         <div>
-          <div className='flex-col text-center mt-8 md:mt-44'>
+          <motion.div
+            animate={{ opacity: [0, 1] }}
+            transition={{ duration: 1 }}
+            className='flex-col text-center mt-8 md:mt-44'
+          >
             {!currentUser && (
               <div className='text-white text-center px-2 py-1 mb-4 w-[350px] border border-alert text-sm mx-auto flex justify-center'>
                 Please<span>&nbsp;</span>
@@ -279,7 +363,7 @@ export default function EditRoutine({ params }:{params:{id:number}}) {
                 buttonTitle={'Cancel'}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </>

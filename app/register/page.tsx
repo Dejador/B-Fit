@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import { FirebaseError } from 'firebase/app';
+import { motion } from 'framer-motion';
 
 export default function Login() {
   const router = useRouter();
@@ -45,7 +46,8 @@ export default function Login() {
 
   return (
     <>
-      <div className='flex h-screen fixed top-0 w-full items-center justify-center flex-col select-none'>
+      <motion.div animate={{ opacity: [0, 1] }}
+            transition={{ duration: 1 }} className='flex h-screen fixed top-0 w-full items-center justify-center flex-col select-none'>
         <h1 className='text-white text-md md:text-xl mb-2'>Register</h1>
         {currentUser && <div className='text-white'>Already registered</div>}
         {!currentUser && (
@@ -88,7 +90,7 @@ export default function Login() {
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
     </>
   );
 }

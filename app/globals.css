@@ -18,7 +18,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background: #292933;
   overflow: hidden;
-  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -29,30 +29,30 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: white; 
+  background: white;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #8d8da0; 
+  background: #8d8da0;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #46465B; 
+  background: #46465b;
 }
 
 @layer components {
   .btn-navbar {
     -webkit-appearance: none;
-  appearance: none;
-  border-radius: 0;
+    appearance: none;
+    border-radius: 0;
     @apply border text-sm bg-main-light hover:bg-main-dark-b text-white px-3 h-[70%] my-auto leading-8 transition-colors rounded select-none;
   }
   .btn-navbar-active {
     -webkit-appearance: none;
-  appearance: none;
-  border-radius: 0;
+    appearance: none;
+    border-radius: 0;
     @apply border text-sm bg-secondary-light text-white px-3 h-[70%] my-auto leading-8 rounded select-none;
   }
   .btn-mobile-menu {
@@ -99,6 +99,6 @@ body {
   }
 
   .loading {
-   @apply w-[50px] h-[50px] rounded-[50%] border-8 border-main-light border-r-secondary-alt-b border-l-secondary-alt-b animate-spin;
+    @apply w-[50px] h-[50px] rounded-[50%] border-8 border-main-light border-r-secondary-alt-b border-l-secondary-alt-b animate-spin;
   }
 }

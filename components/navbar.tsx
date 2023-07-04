@@ -1,11 +1,12 @@
 'use client';
 
+import LinkButton from './link-button';
+import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import LinkButton from './link-button';
 import { mainPages } from '../common/data';
-import Image from 'next/image';
 import { useAuth } from '../context/AuthContext';
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const { currentUser } = useAuth();
@@ -22,8 +23,17 @@ export default function Navbar() {
   return (
     <>
       {/* DESKTOP */}
-      <div className='hidden fixed md:flex md:w-full px-8 top-0 mt-4 z-10'>
-        <div className={isActive ? 'animate-none' : 'w-12 align-middle hover:animate-spin'} onTouchEnd={() => setActive(true)} >
+      <motion.div
+        animate={{ opacity: [0, 1] }}
+        transition={{ duration: 1, delay: 0.5 }}
+        className='hidden fixed md:flex md:w-full px-8 top-0 mt-4 z-10'
+      >
+        <div
+          className={
+            isActive ? 'animate-none' : 'w-12 align-middle hover:animate-spin'
+          }
+          onTouchEnd={() => setActive(true)}
+        >
           <LinkButton
             className={'w-12 h-12 absolute'}
             route={'/'}
@@ -67,7 +77,7 @@ export default function Navbar() {
             B-Fit!
           </h1>
         </div>
-      </div>
+      </motion.div>
       {/* MOBILE */}
       <div className='w-full flex justify-center'>
         <div
