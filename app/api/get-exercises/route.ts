@@ -10,6 +10,7 @@ export async function GET() {
     const res = await fetch(url, {
       method: 'GET',
       headers: headersInfo,
+      cache: 'no-store'
     });
     const data = await res.json();
 
