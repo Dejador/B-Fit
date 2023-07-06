@@ -1,33 +1,29 @@
 import { useState, useEffect } from 'react';
 
 export default function useFetchExercises() {
-  const [allExercises, setAllExercises] = useState<[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bodyPartList, setBodyPartList] = useState<string[]>([]);
   const [allBodyExercises, setAllBodyExercises] = useState<[]>([]);
 
-  useEffect(() => {
-    async function getAllExercises() {
-      try {
-        const res = await fetch('/api/get-exercises');
-        const data = await res.json();
-        setAllExercises(data.data);
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getAllExercises();
-  }, []);
-
   const getAllBodyExercises = () => {
     useEffect(() => {
-      setBodyPartList(
-        [...new Set(allExercises.map(({ bodyPart }) => bodyPart))].sort()
-      );
-      setAllBodyExercises(allExercises);
-    }, [allExercises]);
+      async function getAllExercises() {
+        try {
+          const res = await fetch('/api/get-exercises');
+          const data = await res.json();
+          const allExercises: [] = data.data;
+          setLoading(false);
+          setBodyPartList(
+            [...new Set(allExercises.map(({ bodyPart }) => bodyPart))].sort()
+          );
+          setAllBodyExercises(allExercises);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      getAllExercises();
+    }, []);
   };
 
   return {
