@@ -10,9 +10,7 @@ export default function useFetchExercises() {
     useEffect(() => {
       async function getAllExercises() {
         try {
-          const res = await fetch('/api/get-exercises', {
-            next: { revalidate: 21600 },
-          });
+          const res = await fetch('/api/get-exercises');
           const data = await res.json();
           const allExercises: [] = data.data;
           setLoading(false);

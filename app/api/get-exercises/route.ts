@@ -10,7 +10,7 @@ export async function GET() {
     const res = await fetch(url, {
       method: 'GET',
       headers: headersInfo,
-      next: { revalidate: 21600 },
+      next: { revalidate: 3600 },
     });
     const data = await res.json();
 
