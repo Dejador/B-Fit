@@ -44,7 +44,7 @@ export default function Dropdown({ dropdownTitle }: { dropdownTitle: string }) {
           leaveFrom='transform opacity-100 scale-100'
           leaveTo='transform opacity-0 scale-95'
         >
-          <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-40 md:w-52 ml-6 md:ml-10 text-sm md:text-base origin-top-right bg-white'>
+          <Menu.Items className='absolute capitalize border-secondary-light rounded-sm border-2 text-center z-10 mt-3 w-40 md:w-52 ml-6 md:ml-10 text-sm md:text-base origin-top-right bg-white text-main-dark-b'>
             <div>
               {bodyPartList &&
                 bodyPartList.map((bodyPart: string, id: number) => (
