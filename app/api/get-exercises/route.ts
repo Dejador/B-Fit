@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
@@ -10,6 +11,7 @@ export async function GET() {
     const res = await fetch(url, {
       method: 'GET',
       headers: headersInfo,
+      cache: 'no-store',
       next: { revalidate: 0 },
     });
     const data = await res.json();
